@@ -1,4 +1,4 @@
-describe('basename', function () {
+describe('extname', function () {
 
 	var chai = require('chai');
 	var expect = chai.expect;
@@ -8,68 +8,68 @@ describe('basename', function () {
 	var expectMsg = 'My Message';
 
 	describe('valid expectation', function () {
-		var expected = 'file.ext';
+		var expected = '.ext';
 
 		describe('pass', function () {
 			it('expect / should', function () {
-				expect(actual).to.have.basename(expected, expectMsg);
-				actual.should.have.basename(expected, expectMsg);
+				expect(actual).to.have.extname(expected, expectMsg);
+				actual.should.have.extname(expected, expectMsg);
 			});
 			it('assert', function () {
-				assert.basename(actual, expected, expectMsg);
+				assert.extname(actual, expected, expectMsg);
 			});
 		});
 		describe('fail negation', function () {
-			var report = "My Message: expected '" + actual + "' not to have basename '" + expected + "' but got 'file.ext'";
+			var report = "My Message: expected '" + actual + "' not to have extname '" + expected + "' but got '.ext'";
 
 			it('expect.not / should.not', function () {
 				expect(function () {
-					expect(actual).to.not.have.basename(expected, expectMsg);
+					expect(actual).to.not.have.extname(expected, expectMsg);
 
 				}).to.fail(report);
 				expect(function () {
-					actual.should.not.have.basename(expected, expectMsg);
+					actual.should.not.have.extname(expected, expectMsg);
 
 				}).to.fail(report);
 			});
 			it('assert.not', function () {
 				expect(function () {
-					assert.notBasename(actual, expected, expectMsg);
+					assert.notExtname(actual, expected, expectMsg);
 
 				}).to.fail(report);
 			});
 		});
 	});
 	describe('invalid expectation', function () {
-		var expected = 'foobar.ext';
+		var expected = '.bar';
 
 		describe('fail', function () {
-			var report = "My Message: expected '" + actual + "' to have basename '" + expected + "' but got 'file.ext'";
+			var report = "My Message: expected '" + actual + "' to have extname '" + expected + "' but got '.ext'";
 
 			it('expect / should', function () {
 				expect(function () {
-					expect(actual).to.have.basename(expected, expectMsg);
+					expect(actual).to.have.extname(expected, expectMsg);
 
 				}).to.fail(report);
 				expect(function () {
-					actual.should.have.basename(expected, expectMsg);
+					actual.should.have.extname(expected, expectMsg);
 
 				}).to.fail(report);
 			});
 			it('assert', function () {
 				expect(function () {
-					assert.basename(actual, expected, expectMsg);
+					assert.extname(actual, expected, expectMsg);
 
 				}).to.fail(report);
 			});
 		});
 		describe('pass negation', function () {
 			it('expect.not / should.not', function () {
-				expect(actual).to.not.have.basename(expected, expectMsg);
-				actual.should.not.have.basename(expected, expectMsg);
+				expect(actual).to.not.have.extname(expected, expectMsg);
+				actual.should.not.have.extname(expected, expectMsg);
 			});
 			it('assert.not', function () {
-				assert.notBasename(actual, expected, expectMsg);
+				assert.notExtname(actual, expected, expectMsg);
 			});
 		});
 	});

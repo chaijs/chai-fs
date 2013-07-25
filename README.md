@@ -25,16 +25,56 @@ No `fs` and `path` (but browserify? phantomJS?)
 
 ## Assertions
 
-	// bdd
+All assertions are available in BDD `expect`, `should` and TDD `assert` styles. 
+
+### basename(name)
+
+Assert the return value of `path.basename(path)`
+
+	expect(path).to.have.basename(name)
+	expect(path).to.not.have.basename(name)
 	
-	//path info 
-	expect(path).to.have.dirname(name);
-	expect(path).to.have.basename(name, ? ext);
-	expect(path).to.have.extname(name);
+	path.should.have.basename(name)
+	path.should.not.have.basename(name)
+
+	assert.basename(path, name)
+	assert.notBasename(path, name)
+
+### dirname(name)
+
+Assert the return value of `path.dirname(path)`
+	
+	expect(path).to.have.dirname(name)
+	expect(path).to.not.have.dirname(name)
+	
+	path.should.have.dirname(name)
+	path.should.not.have.dirname(name)
+
+	assert.dirname(path, name)
+	assert.notDirname(path, name)
+
+
+### extname(name)
+
+Assert the return value of `path.extname(path)`
+	
+	expect(path).to.have.extname(name)
+	expect(path).to.not.have.extname(name)
+	
+	path.should.have.extname(name)
+	path.should.not.have.extname(name)
+
+	assert.extname(path, name)
+	assert.notExtname(path, name)
+
+## Coming up
+
 
 	// type
 	expect(path).to.exist.as.path;
+
 	expect(path).to.exist.as.file;
+
 	expect(path).to.exist.as.directory;
 	
 	// content
