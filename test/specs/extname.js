@@ -1,76 +1,54 @@
-describe('extname', function () {
+describe(require('path').basename(__filename), function () {
 
 	var chai = require('chai');
 	var expect = chai.expect;
 	var assert = chai.assert;
 
-	var actual = '/dir/sub/file.ext';
-	var expectMsg = 'My Message';
+	var styles = {
+		expect: {
+			base: {
+				"basic": function (params) {
+					expect(params.actual).to.have.extname(params.expected);
+					params.actual.should.have.extname(params.expected);
+				},
+				"with message": {msg: true, call: function (params) {
+					expect(params.actual).to.have.extname(params.expected, params.msg);
+					params.actual.should.have.extname(params.expected, params.msg);
+				}}
+			},
+			negate: function (params) {
+				expect(params.actual).to.not.have.extname(params.expected);
+				params.actual.should.not.have.extname(params.expected);
+			}
+		},
+		assert: {
+			base: {
+				"basic": function (params) {
+					assert.extname(params.actual, params.expected);
+				},
+				"with message": {msg: true, call: function (params) {
+					assert.extname(params.actual, params.expected, params.msg);
+				}}
+			},
+			negate: function (params) {
+				assert.notExtname(params.actual, params.expected);
+			}
+		}
+	};
 
-	describe('valid expectation', function () {
-		var expected = '.ext';
+	var defaults = {
+		actual: '/dir/sub/file.ext',
+		msg: 'My Message'
+	};
 
-		describe('pass', function () {
-			it('expect / should', function () {
-				expect(actual).to.have.extname(expected, expectMsg);
-				actual.should.have.extname(expected, expectMsg);
-			});
-			it('assert', function () {
-				assert.extname(actual, expected, expectMsg);
-			});
-		});
-		describe('fail negation', function () {
-			var report = "My Message: expected '" + actual + "' not to have extname '" + expected + "' but got '.ext'";
+	var test = chai.getStyleTest(styles, defaults);
 
-			it('expect.not / should.not', function () {
-				expect(function () {
-					expect(actual).to.not.have.extname(expected, expectMsg);
-
-				}).to.fail(report);
-				expect(function () {
-					actual.should.not.have.extname(expected, expectMsg);
-
-				}).to.fail(report);
-			});
-			it('assert.not', function () {
-				expect(function () {
-					assert.notExtname(actual, expected, expectMsg);
-
-				}).to.fail(report);
-			});
-		});
+	test.valid({
+		expected: '.ext',
+		report: "expected '<%= actual %>' not to have extname '<%= expected %>' but got '.ext'"
 	});
-	describe('invalid expectation', function () {
-		var expected = '.bar';
-
-		describe('fail', function () {
-			var report = "My Message: expected '" + actual + "' to have extname '" + expected + "' but got '.ext'";
-
-			it('expect / should', function () {
-				expect(function () {
-					expect(actual).to.have.extname(expected, expectMsg);
-
-				}).to.fail(report);
-				expect(function () {
-					actual.should.have.extname(expected, expectMsg);
-
-				}).to.fail(report);
-			});
-			it('assert', function () {
-				expect(function () {
-					assert.extname(actual, expected, expectMsg);
-
-				}).to.fail(report);
-			});
-		});
-		describe('pass negation', function () {
-			it('expect.not / should.not', function () {
-				expect(actual).to.not.have.extname(expected, expectMsg);
-				actual.should.not.have.extname(expected, expectMsg);
-			});
-			it('assert.not', function () {
-				assert.notExtname(actual, expected, expectMsg);
-			});
-		});
+	test.invalid({
+		expected: '.bar',
+		report: "expected '<%= actual %>' to have extname '<%= expected %>' but got '.ext'"
 	});
 });
