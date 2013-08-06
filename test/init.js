@@ -33,8 +33,8 @@ describe('chai-fs', function () {
 				);
 				this.assert(
 					err.message === message
-					, 'failed correctly, but expected message #{act} to equal #{exp}'
-					, 'failed correctly, but expected message #{act} to not equal #{exp}'
+					, 'failed but expected message #{act} to equal #{exp}'
+					, 'failed but expected message #{act} to not equal #{exp}'
 					, message
 					, err.message
 				);
@@ -54,30 +54,34 @@ describe('chai-fs', function () {
 		});
 	});
 
+	// assert a passing test using all styles
 	var pass = function (type, styles, params) {
 		_.each(styles, function (style, styleName) {
 			if (!style.hasOwnProperty(type)) {
 				throw( new Error('no assertion type ' + type));
 			}
 			var t = style[type];
-			describe(styleName, function () {
-				if (_.isFunction(t)) {
-					it('basic', function () {
-						t(params);
+
+			// simple non-nested call with no label or msg
+			if (_.isFunction(t)) {
+				it(styleName + ' basic', function () {
+					t(params);
+				});
+			}
+			else {
+				// nested call with sub label
+				_.each(t, function (variation, label) {
+					// simple call or object with .call and some options
+					var call = _.isFunction(variation) ? variation : variation.call;
+					it(styleName + ' ' + label, function () {
+						call(params);
 					});
-				}
-				else {
-					_.each(t, function (variation, label) {
-						var call = _.isFunction(variation) ? variation : variation.call;
-						it(label, function () {
-							call(params);
-						});
-					});
-				}
-			});
+				});
+			}
 		});
 	};
 
+	// assert a failing test using all styles
 	var fail = function (type, styles, params) {
 		if (!params.hasOwnProperty('report')) {
 			throw( new Error('no report param'));
@@ -89,66 +93,80 @@ describe('chai-fs', function () {
 			if (!style.hasOwnProperty(type)) {
 				throw( new Error('no assertion type ' + type));
 			}
+			var t = style[type];
 
-			describe(styleName, function () {
-				var t = style[type];
-				if (_.isFunction(t)) {
-					it('basic', function () {
-						expect(function () {
-							t(params);
-						}).to.fail(report);
-					});
-				}
-				else {
-					_.each(t, function (variation, label) {
-						it(label, function () {
-							var rep = variation.msg ? params.msg + ': ' + report : report;
-							var call = _.isFunction(variation) ? variation : variation.call;
-							expect(function () {
-								call(params);
-							}).to.fail(rep);
-						});
-					});
-				}
-			});
-		});
-	};
-
-	chai.getStyleTest = function (styles, def) {
-
-		return {
-			valid: function (params) {
-				params = _.defaults(_.clone(params), def);
-
-				if (!params.hasOwnProperty('msg')) {
-					throw( new Error('no msg param'));
-				}
-
-				describe('valid expectation', function () {
-					describe('pass', function () {
-						pass('base', styles, params);
-					});
-					describe('fail negation', function () {
-						fail('negate', styles, params);
-					});
+			// simple non-nested call with no label or msg
+			if (_.isFunction(t)) {
+				it(styleName + ' basic', function () {
+					expect(function () {
+						t(params);
+					}).to.fail(report);
 				});
-			},
-			invalid: function (params) {
-				params = _.defaults(_.clone(params), def);
-
-				if (!params.hasOwnProperty('msg')) {
-					throw( new Error('no msg param'));
-				}
-
-				describe('invalid expectation', function () {
-					describe('fail', function () {
-						fail('base', styles, params);
-					});
-					describe('pass negation', function () {
-						pass('negate', styles, params);
+			}
+			else {
+				// nested call with sub label
+				_.each(t, function (variation, label) {
+					it(styleName + ' ' + label, function () {
+						// simple call or object with .call and some options
+						var rep = variation.msg ? params.msg + ': ' + report : report;
+						var call = _.isFunction(variation) ? variation : variation.call;
+						expect(function () {
+							call(params);
+						}).to.fail(rep);
 					});
 				});
 			}
+		});
+	};
+
+	// get wrappers test main scenarios with all styles including negations
+	chai.getStyleTest = function (styles, def) {
+
+		// keep it dry
+		var wrap = function (func) {
+			return function (params) {
+				params = _.defaults(_.clone(params), def);
+				if (!params.hasOwnProperty('msg')) {
+					throw( new Error('no msg param'));
+				}
+				var label = params.label ? ' (' + params.label + ')' : '';
+
+				func(label, params);
+			};
+		};
+
+		return {
+			valid: wrap(function (label, params) {
+				describe('valid expectation' + label, function () {
+					describe('should pass', function () {
+						pass('base', styles, params);
+					});
+					describe('should fail when negated', function () {
+						fail('negate', styles, params);
+					});
+				});
+			}),
+			invalid: wrap(function (label, params) {
+				describe('invalid expectation' + label, function () {
+					describe('should fail', function () {
+						fail('base', styles, params);
+					});
+					describe('should pass when negated', function () {
+						pass('negate', styles, params);
+					});
+				});
+			}),
+			// an expectation with invalid data will always fail on pre-tests (even when negated)
+			error: wrap(function (label, params) {
+				describe('invalid data' + label, function () {
+					describe('should fail', function () {
+						fail('base', styles, params);
+					});
+					describe('should fail when negated', function () {
+						fail('negate', styles, params);
+					});
+				});
+			})
 		};
 	};
 

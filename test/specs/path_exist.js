@@ -5,7 +5,7 @@ describe(require('path').basename(__filename), function () {
 	var assert = chai.assert;
 
 	var styles = {
-		"expect / should": {
+		"expect/should": {
 			base: {
 				"basic": function (params) {
 					expect(params.actual).to.be.a.path();
@@ -38,17 +38,22 @@ describe(require('path').basename(__filename), function () {
 	};
 
 	var defaults = {
-		actual: 'test/fixtures/alpha.txt',
 		msg: 'My Message'
 	};
 
 	var test = chai.getStyleTest(styles, defaults);
 
 	test.valid({
+		actual: 'test/fixtures/alpha.txt',
 		report: "expected '<%= actual %>' not to exist"
 	});
 	test.invalid({
 		actual: 'test/fixtures/non-existing.txt',
 		report: "expected '<%= actual %>' to exist"
+	});
+	test.error({
+		label: 'bad actual type',
+		actual: 123,
+		report: "actual-value: expected <%= actual %> to be a string"
 	});
 });

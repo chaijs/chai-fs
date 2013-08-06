@@ -51,4 +51,14 @@ describe(require('path').basename(__filename), function () {
 		expected: 'foo/bar',
 		report: "expected '<%= actual %>' to have dirname '<%= expected %>' but got '/dir/sub'"
 	});
+	test.error({
+		label: 'bad actual type',
+		actual: 123,
+		report: "actual-value: expected <%= actual %> to be a string"
+	});
+	test.error({
+		label: 'bad expected type',
+		expected: 123,
+		report: "expected-value: expected <%= expected %> to be a string"
+	});
 });

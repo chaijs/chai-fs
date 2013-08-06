@@ -51,4 +51,14 @@ describe(require('path').basename(__filename), function () {
 		expected: '.bar',
 		report: "expected '<%= actual %>' to have extname '<%= expected %>' but got '.ext'"
 	});
+	test.error({
+		label: 'bad actual type',
+		actual: 123,
+		report: "actual-value: expected <%= actual %> to be a string"
+	});
+	test.error({
+		label: 'bad expected type',
+		expected: 123,
+		report: "expected-value: expected <%= expected %> to be a string"
+	});
 });
