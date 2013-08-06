@@ -13,11 +13,18 @@ describe('chai-fs', function () {
 	var mkdirp = require('mkdirp');
 	var _ = require('underscore');
 
+	// taken from chai-fuzzy
 	chai.use(function (chai, utils) {
 		//var objDisplay = utils.objDisplay;
 		var inspect = utils.inspect;
 
-		chai.Assertion.addMethod('fail', function (message) {
+		var cleanFuncStr = function(func) {
+			var str = func.toString();
+			str = str.replace(/^[\t ]+/gm, '');
+			return str;
+		};
+
+		chai.Assertion.addMethod('failCall', function (func, message) {
 			var obj = this._obj;
 
 			new chai.Assertion(obj).is.a('function');
@@ -26,10 +33,11 @@ describe('chai-fs', function () {
 				obj();
 			}
 			catch (err) {
+				var str = cleanFuncStr(func);
 				this.assert(
 					err instanceof chai.AssertionError
-					, 'expected #{this} to fail, but it threw ' + inspect(err)
-					, 'expected #{this} to not fail, but it threw ' + inspect(err)
+					, 'expected ' + str +' to fail, but it threw ' + inspect(err)
+					, 'expected ' + str +' to not fail, but it threw ' + inspect(err)
 				);
 				this.assert(
 					err.message === message
@@ -40,17 +48,11 @@ describe('chai-fs', function () {
 				);
 				return;
 			}
-			this.assert(false, 'expected #{this} to fail');
-		});
-	});
-
-	before(function (done) {
-		// create an empty dir (cannot check-in empty dirs to git)
-		mkdirp('./test/fixtures/empty', function (err) {
-			if (err) {
-				return done(err);
-			}
-			done();
+			var str = cleanFuncStr(func);
+			this.assert(
+				false
+				, 'expected ' + str +' to fail'
+			);
 		});
 	});
 
@@ -64,6 +66,7 @@ describe('chai-fs', function () {
 
 			// simple non-nested call with no label or msg
 			if (_.isFunction(t)) {
+
 				it(styleName, function () {
 					t(params);
 				});
@@ -73,6 +76,7 @@ describe('chai-fs', function () {
 				_.each(t, function (variation, label) {
 					// simple call or object with .call and some options
 					var call = _.isFunction(variation) ? variation : variation.call;
+
 					it(styleName + ' ' + label, function () {
 						call(params);
 					});
@@ -97,22 +101,24 @@ describe('chai-fs', function () {
 
 			// simple non-nested call with no label or msg
 			if (_.isFunction(t)) {
+
 				it(styleName, function () {
 					expect(function () {
 						t(params);
-					}).to.fail(report);
+					}).to.failCall(t, report);
 				});
 			}
 			else {
 				// nested call with sub label
 				_.each(t, function (variation, label) {
+					// simple call or object with .call and some options
+					var rep = variation.msg ? params.msg + ': ' + report : report;
+					var call = _.isFunction(variation) ? variation : variation.call;
+
 					it(styleName + ' ' + label, function () {
-						// simple call or object with .call and some options
-						var rep = variation.msg ? params.msg + ': ' + report : report;
-						var call = _.isFunction(variation) ? variation : variation.call;
 						expect(function () {
 							call(params);
-						}).to.fail(rep);
+						}).to.failCall(call, rep);
 					});
 				});
 			}
@@ -140,6 +146,7 @@ describe('chai-fs', function () {
 
 		return {
 			valid: wrap(function (label, params) {
+
 				describe('valid expectation' + label, function () {
 					describe('should pass', function () {
 						pass('base', styles, params);
@@ -150,6 +157,7 @@ describe('chai-fs', function () {
 				});
 			}),
 			invalid: wrap(function (label, params) {
+
 				describe('invalid expectation' + label, function () {
 					describe('should fail', function () {
 						fail('base', styles, params);
@@ -161,6 +169,7 @@ describe('chai-fs', function () {
 			}),
 			// an expectation with invalid data will always fail on pre-tests (even when negated)
 			error: wrap(function (label, params) {
+
 				describe('invalid data' + label, function () {
 					describe('should fail', function () {
 						fail('base', styles, params);
@@ -172,6 +181,16 @@ describe('chai-fs', function () {
 			})
 		};
 	};
+
+	before(function (done) {
+		// create an empty dir (cannot check-in empty dirs to git)
+		mkdirp('./test/fixtures/empty', function (err) {
+			if (err) {
+				return done(err);
+			}
+			done();
+		});
+	});
 
 	it('exports module', function () {
 		assert.isFunction(chai_fs, 'chai_fs export');

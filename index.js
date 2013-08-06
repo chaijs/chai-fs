@@ -125,6 +125,59 @@ module.exports = function (chai, utils) {
 
 	//-------------------------------------------------------------------------------------------------------------
 
+	Assertion.overwriteProperty('empty', function (_super) {
+		return function () {
+			var obj = this._obj;
+			var pass, test;
+
+			if (flag(this, 'fs.isDirectory') === true) {
+
+				pass = fs.readdirSync(obj).length === 0;
+				test = new Assertion(obj, flag(this, 'message'));
+
+				//TODO verify this if/else makes sense
+				if (flag(this, 'negate')){
+					test.assert(
+						!pass
+						, "expected #{this} not to be an empty directory"
+						, "expected #{this} to be an empty directory"
+					);
+				}
+				else {
+					test.assert(
+						pass
+						, "expected #{this} to be an empty directory"
+						, "expected #{this} not to be an empty directory"
+					);
+				}
+			} else if (flag(this, 'fs.isFile') === true) {
+
+				pass = fs.statSync(obj).size === 0;
+				test = new Assertion(obj, flag(this, 'message'));
+
+				//TODO verify this if/else makes sense
+				if (flag(this, 'negate')){
+					test.assert(
+						!pass
+						, "expected #{this} not to be an empty file"
+						, "expected #{this} to be an empty file"
+					);
+				}
+				else {
+					test.assert(
+						pass
+						, "expected #{this} to be an empty file"
+						, "expected #{this} not to be an empty file"
+					);
+				}
+			} else {
+				_super.call(this);
+			}
+		};
+	});
+
+	//-------------------------------------------------------------------------------------------------------------
+
 	Assertion.addMethod('file', function (msg) {
 		var preMsg = '';
 		if (msg) {
@@ -139,17 +192,26 @@ module.exports = function (chai, utils) {
 
 		var pass = fs.statSync(obj).isFile();
 
+		flag(this, 'fs.isFile', pass);
+
 		this.assert(
 			pass
 			, "expected #{this} to be a file"
 			, "expected #{this} not to be a file"
 		);
 	});
-	assert.pathIsFile = function (val, msg) {
+	assert.isFile = function (val, msg) {
 		new chai.Assertion(val).to.be.a.file(msg);
 	};
-	assert.notPathIsFile = function (val, msg) {
+	assert.notIsFile = function (val, msg) {
 		new chai.Assertion(val).to.not.be.a.file(msg);
+	};
+
+	assert.isEmptyFile = function (val, msg) {
+		new chai.Assertion(val).to.be.a.file(msg).and.empty;
+	};
+	assert.notIsEmptyFile = function (val, msg) {
+		new chai.Assertion(val).to.be.a.file(msg).and.not.empty;
 	};
 
 	//-------------------------------------------------------------------------------------------------------------
@@ -168,22 +230,32 @@ module.exports = function (chai, utils) {
 
 		var pass = fs.statSync(obj).isDirectory();
 
+		flag(this, 'fs.isDirectory', pass);
+
 		this.assert(
 			pass
 			, "expected #{this} to be a directory"
 			, "expected #{this} not to be a directory"
 		);
 	});
-	assert.pathIsDirectory = function (val, msg) {
+	assert.isDirectory = function (val, msg) {
 		new chai.Assertion(val).to.be.a.directory(msg);
 	};
-	assert.notPathIsDirectory = function (val, msg) {
+	assert.notIsDirectory = function (val, msg) {
 		new chai.Assertion(val).to.not.be.a.directory(msg);
+	};
+
+	assert.isEmptyDirectory = function (val, msg) {
+		new chai.Assertion(val).to.be.a.directory(msg).and.empty;
+	};
+	assert.notIsEmptyDirectory = function (val, msg) {
+		new chai.Assertion(val).to.be.a.directory(msg).and.not.empty;
 	};
 
 	//-------------------------------------------------------------------------------------------------------------
 
-	//TODO add utf8, base64, etc flags
+	//TODO add (utf8, base64, etc) flag chain props
+	//TODO add Buffer comapre/diff
 
 	Assertion.addMethod('content', function (expected, msg) {
 		var preMsg = '';

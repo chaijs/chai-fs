@@ -25,18 +25,18 @@ describe(require('path').basename(__filename), function () {
 		assert: {
 			base: {
 				"basic": function (params) {
-					assert.pathIsDirectory(params.value);
+					assert.isDirectory(params.value);
 				},
 				"with message": {msg: true, call: function (params) {
-					assert.pathIsDirectory(params.value, params.msg);
+					assert.isDirectory(params.value, params.msg);
 				}}
 			},
 			negate: {
 				"basic": function (params) {
-					assert.notPathIsDirectory(params.value);
+					assert.notIsDirectory(params.value);
 				},
 				"with message": {msg: true, call: function (params) {
-					assert.notPathIsDirectory(params.value, params.msg);
+					assert.notIsDirectory(params.value, params.msg);
 				}}
 			}
 		}

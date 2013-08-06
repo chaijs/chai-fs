@@ -1,4 +1,5 @@
 describe(require('path').basename(__filename), function () {
+	/* jshint -W030 */
 
 	var chai = require('chai');
 	var expect = chai.expect;
@@ -8,35 +9,34 @@ describe(require('path').basename(__filename), function () {
 		"expect/should": {
 			base: {
 				"basic": function (params) {
-					expect(params.value).to.be.a.file();
-					params.value.should.be.a.file();
+					expect(params.value).to.be.a.file().and.empty;
+					params.value.should.be.a.file().and.empty;
 				},
 				"with message": {msg: true, call: function (params) {
-					expect(params.value).to.be.a.file(params.msg);
-					params.value.should.be.a.file(params.msg);
+					expect(params.value).to.be.a.file(params.msg).and.empty;
+					params.value.should.be.a.file(params.msg).and.empty;
 				}}
 			},
 			negate: function (params) {
-				expect(params.value).to.not.be.a.file();
-				params.value.should.not.be.a.file();
-
+				expect(params.value).to.be.a.file().and.not.empty;
+				params.value.should.be.a.file().and.not.empty;
 			}
 		},
 		assert: {
 			base: {
 				"basic": function (params) {
-					assert.isFile(params.value);
+					assert.isEmptyFile(params.value);
 				},
 				"with message": {msg: true, call: function (params) {
-					assert.isFile(params.value, params.msg);
+					assert.isEmptyFile(params.value, params.msg);
 				}}
 			},
 			negate: {
 				"basic": function (params) {
-					assert.notIsFile(params.value);
+					assert.notIsEmptyFile(params.value);
 				},
 				"with message": {msg: true, call: function (params) {
-					assert.notIsFile(params.value, params.msg);
+					assert.notIsEmptyFile(params.value, params.msg);
 				}}
 			}
 		}
@@ -49,18 +49,24 @@ describe(require('path').basename(__filename), function () {
 	var test = chai.getStyleTest(styles, defaults);
 
 	test.valid({
-		value: 'test/fixtures/alpha.txt',
-		report: "expected '<%= value %>' not to be a file"
+		value: 'test/fixtures/empty.txt',
+		report: "expected '<%= value %>' not to be an empty file"
 	});
 	test.invalid({
-		label: 'directory',
-		value: 'test/fixtures/dir',
-		report: "expected '<%= value %>' to be a file"
+		label: 'file',
+		value: 'test/fixtures/alpha.txt',
+		report: "expected '<%= value %>' to be an empty file"
 	});
+
 	test.error({
 		label: 'non-existing path',
-		value: 'test/fixtures/non-existing.txt',
+		value: 'test/fixtures/non-existing',
 		report: "value: expected '<%= value %>' to exist"
+	});
+	test.error({
+		label: 'path to directory',
+		value: 'test/fixtures/dir',
+		report: "expected '<%= value %>' to be a file"
 	});
 	test.error({
 		label: 'bad value type',

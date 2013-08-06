@@ -8,7 +8,7 @@ Uses `path` and synchronous `fs` to assert files and directories.
 
 All assertions are available in `expect`, `should` and `assert` style, and support the optional, message parameter.
 
-***Note:*** *This is a work in progress. The assertions may change at any time until the version is raised and things are published to NPM.*
+***Note:*** *This is a work in progress. The assertions may change at any time until the version is raised and things are published to NPM and the Chai plugin directory.*
 
 ## Usage
 
@@ -31,127 +31,213 @@ No file system (but browserify? phantomJS? message me if you tried!)
 
 Wrappers around `require('path')`
 
-### basename
+### basename()
 
 Assert the return value of `path.basename(path)`
 
-	expect(path).to.have.basename(name, ?msg);
-	expect(path).to.not.have.basename(name, ?msg);
-	
-	path.should.have.basename(name, ?msg);
-	path.should.not.have.basename(name, ?msg);
+````
+expect(path).to.have.basename(name, ?msg);
+expect(path).to.not.have.basename(name, ?msg);
 
-	assert.basename(path, name, ?msg);
-	assert.notBasename(path, name, ?msg);
+path.should.have.basename(name, ?msg);
+path.should.not.have.basename(name, ?msg);
 
-### dirname
+assert.basename(path, name, ?msg);
+assert.notBasename(path, name, ?msg);
+````
+
+### dirname()
 
 Assert the return value of `path.dirname(path)`
-	
-	expect(path).to.have.dirname(name, ?msg);
-	expect(path).to.not.have.dirname(name, ?msg);
-	
-	path.should.have.dirname(name, ?msg);
-	path.should.not.have.dirname(name, ?msg);
 
-	assert.dirname(path, name, ?msg);
-	assert.notDirname(path, name, ?msg);
+````	
+expect(path).to.have.dirname(name, ?msg);
+expect(path).to.not.have.dirname(name, ?msg);
 
-### extname
+path.should.have.dirname(name, ?msg);
+path.should.not.have.dirname(name, ?msg);
+
+assert.dirname(path, name, ?msg);
+assert.notDirname(path, name, ?msg);
+````
+
+### extname()
 
 Assert the return value of `path.extname(path)`
 	
-	expect(path).to.have.extname(name, ?msg);
-	expect(path).to.not.have.extname(name, ?msg);
-	
-	path.should.have.extname(name, ?msg);
-	path.should.not.have.extname(name, ?msg);
+````
+expect(path).to.have.extname(name, ?msg);
+expect(path).to.not.have.extname(name, ?msg);
 
-	assert.extname(path, name, ?msg);
-	assert.notExtname(path, name, ?msg);
+path.should.have.extname(name, ?msg);
+path.should.not.have.extname(name, ?msg);
 
-## Existence assertions
+assert.extname(path, name, ?msg);
+assert.notExtname(path, name, ?msg);
+````
 
-### path
+## Fs assertions
+
+### path()
 
 Assert if the path exists.
-	
-	expect(path).to.be.a.path(?msg);
-	expect(path).to.not.be.a.path(?msg);
-	
-	path.should.be.a.path(?msg);
-	path.should.not.be.a.path(?msg);
 
-	assert.pathExists(path, ?msg);
-	assert.notPathExists(path, ?msg);
+* Uses `fs.existsSync()`.
+* Making use of Chai's `exist` to chain would've been nice *but* has issues with negations and the message parameter.
 
-Note: using Chai's `exists` chain would've been nice but gives issues with negations and the message parameter.
+````
+expect(path).to.be.a.path(?msg);
+expect(path).to.not.be.a.path(?msg);
 
-### file
+path.should.be.a.path(?msg);
+path.should.not.be.a.path(?msg);
+
+assert.pathExists(path, ?msg);
+assert.notPathExists(path, ?msg);
+````
+
+### file()
 
 Assert if the path exists and is a file.
+
+* Uses `fs.statSync().isFile()`
 	
-	expect(path).to.be.a.file(?msg);
-	expect(path).to.not.be.a.file(?msg);
-	
-	path.should.be.a.file(?msg);
-	path.should.not.be.a.file(?msg);
+````
+expect(path).to.be.a.file(?msg);
+expect(path).to.not.be.a.file(?msg);
 
-	assert.pathIsFile(path, ?msg);
-	assert.notPathIsFile(path, ?msg);
+path.should.be.a.file(?msg);
+path.should.not.be.a.file(?msg);
+
+assert.isFile(path, ?msg);
+assert.notIsFile(path, ?msg);
+````
 
 
-### directory
+### file().and.empty
+
+Assert if the path exists, is a file and contains nothing. 
+
+* Chains after `file()`
+* Uses `fs.statSync().size === 0`.
+* To negate this using `expect/should` you chain the `.not`-negation ***behind*** the regular `file()`.
+
+````
+expect(path).to.be.a.file(?msg).and.empty;
+expect(path).to.be.a.file(?msg).and.not.empty;
+
+path.should.be.a.file(?msg).and.empty;
+path.should.be.a.file(?msg).and.not.empty;
+
+assert.isEmptyFile(path, ?msg);
+assert.notIsEmptyFile(path, ?msg); 
+````
+
+
+### directory()
 
 Assert if the path exists and is a directory.
 	
-	expect(path).to.be.a.directory(?msg);
-	expect(path).to.not.be.a.directory(?msg);
+* Uses `fs.statSync().isDirectory()`
+
+````
+expect(path).to.be.a.directory(?msg);
+expect(path).to.not.be.a.directory(?msg);
+
+path.should.be.a.directory(?msg);
+path.should.not.be.a.directory(?msg);
+
+assert.isDirectory(path,  ?msg);
+assert.notIsDirectory(path, ?msg);
+````
+
+### directory().and.empty
+
+Assert if the path exists, is a directory and contains nothing. 
+
+* Chains after `directory()`
+* Uses `fs.readdirSync().length === 0`.
+* To negate this using `expect/should` you chain the `.not`-negation ***behind*** the regular `directory()`.
 	
-	path.should.be.a.directory(?msg);
-	path.should.not.be.a.directory(?msg);
+````
+expect(path).to.be.a.directory(?msg).and.empty;
+expect(path).to.be.a.directory(?msg).and.not.empty;
 
-	assert.pathIsDirectory(path,  ?msg);
-	assert.notPathIsDirectory(path, ?msg);
+path.should.be.a.directory(?msg).and.empty;
+path.should.be.a.directory(?msg).and.not.empty;
+
+assert.isEmptyDirectory(path, ?msg);
+assert.notIsEmptyDirectory(path, ?msg);
+````
+
+### content()
+
+Assert if the path exists, is a file and has specific content.
+
+* Reads file as utf8 text (planneds update to support base64, binary Buffer etc). 
+	   
+````
+expect(path).to.have.content(data, ?msg);
+expect(path).to.not.have.content(data, ?msg);
+
+path.should.have.content(data, ?msg);
+path.should.not.have.content(data, ?msg);
+
+assert.fileContent(path, data, ?msg);
+assert.notFileContent(path, data, ?msg);
+````
 
 
-## Coming up next
+## Future additions
 
-Some ideas for new assertions, exact format may change:
+Some ideas for new assertions:
 
-Priority
-	
-	// content
-	expect(path).file.to.equal(dataOrRegExp);
+````
+// content by path
+expect(path).to.be.a.file(msg).and.equal(otherPath);
+expect(path).to.be.a.file(msg).and.deep.equal(otherPath); // + mtime, uid, gid
 
-	expect(path).directory.to.be.empty;
-	
-	// content by path
-	expect(path).to.equal.file(otherPath);
-	expect(path).to.deep.equal.file(otherPath); // + mtime, uid, gid
-	
-	// stat
-	expect(path).to.have.size(size);
-	expect(path).to.have.size(minSize, maxSize);
-	
-Some to add later:
-	
-	// stat
-	expect(path).to.have.atime(date);
-	expect(path).to.have.mtime(date);
-	expect(path).to.have.ctime(date);
+// content types
+expect(path).to.be.a.file(msg).with.json;
+expect(path).to.be.a.file(msg).with.xml;
 
-	expect(path).to.have.uid(id);
-	expect(path).to.have.gid(id);
+// stat
+expect(path).to.have.size(size);
+expect(path).to.have.size(minSize, maxSize);
 
-	// some ideas for later (interface with chai-date-time?)
-	expect(path).to.have.atime.before(date);
-	expect(path).to.have.mtime.before(date);
-	expect(path).to.have.ctime.before(date);
+// user/group
+expect(path).to.have.uid(id);
+expect(path).to.have.gid(id);
 
-	expect(path).to.have.atime.after(date);
-	expect(path).to.have.mtime.after(date);
-	expect(path).to.have.ctime.after(date);
+expect(path).to.be.readable();
+expect(path).to.be.writable();
+expect(path).to.be.executable();
+
+// with uid/gid feature?
+expect(path).to.be.readableBy(uid_gid_string);
+expect(path).to.be.writableBy(uid_gid_string);
+expect(path).to.be.executableBy(uid_gid_string);
+
+// paths
+expect(path).to.be.parent.of(other);
+expect(path).to.be.child.of(other);
+
+expect(path).to.be.absolute();
+
+// stat
+expect(path).to.have.atime(date);
+expect(path).to.have.mtime(date);
+expect(path).to.have.ctime(date);
+
+// some ideas for later (interface with chai-date-time?)
+expect(path).to.have.atime.before(date);
+expect(path).to.have.mtime.before(date);
+expect(path).to.have.ctime.before(date);
+
+expect(path).to.have.atime.after(date);
+expect(path).to.have.mtime.after(date);
+expect(path).to.have.ctime.after(date);
+````
 
 
 ## History
