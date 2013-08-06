@@ -8,36 +8,41 @@ describe(require('path').basename(__filename), function () {
 		expect: {
 			base: {
 				"basic": function (params) {
-					expect(params.actual).to.have.basename(params.expected);
-					params.actual.should.have.basename(params.expected);
+					expect(params.value).to.have.basename(params.expected);
+					params.value.should.have.basename(params.expected);
 				},
 				"with message": {msg: true, call: function (params) {
-					expect(params.actual).to.have.basename(params.expected, params.msg);
-					params.actual.should.have.basename(params.expected, params.msg);
+					expect(params.value).to.have.basename(params.expected, params.msg);
+					params.value.should.have.basename(params.expected, params.msg);
 				}}
 			},
 			negate: function (params) {
-				expect(params.actual).to.not.have.basename(params.expected);
-				params.actual.should.not.have.basename(params.expected);
+				expect(params.value).to.not.have.basename(params.expected);
+				params.value.should.not.have.basename(params.expected);
 			}
 		},
 		assert: {
 			base: {
 				"basic": function (params) {
-					assert.basename(params.actual, params.expected);
+					assert.basename(params.value, params.expected);
 				},
 				"with message": {msg: true, call: function (params) {
-					assert.basename(params.actual, params.expected, params.msg);
+					assert.basename(params.value, params.expected, params.msg);
 				}}
 			},
-			negate: function (params) {
-				assert.notBasename(params.actual, params.expected);
+			negate: {
+				"basic": function (params) {
+					assert.notBasename(params.value, params.expected);
+				},
+				"with message": {msg: true, call: function (params) {
+					assert.notBasename(params.value, params.expected, params.msg);
+				}}
 			}
 		}
 	};
 
 	var defaults = {
-		actual: '/dir/sub/file.ext',
+		value: '/dir/sub/file.ext',
 		msg: 'My Message'
 	};
 
@@ -45,16 +50,16 @@ describe(require('path').basename(__filename), function () {
 
 	test.valid({
 		expected: 'file.ext',
-		report: "expected '<%= actual %>' not to have basename '<%= expected %>' but got 'file.ext'"
+		report: "expected '<%= value %>' not to have basename '<%= expected %>' but got 'file.ext'"
 	});
 	test.invalid({
 		expected: 'foobar.ext',
-		report: "expected '<%= actual %>' to have basename '<%= expected %>' but got 'file.ext'"
+		report: "expected '<%= value %>' to have basename '<%= expected %>' but got 'file.ext'"
 	});
 	test.error({
-		label: 'bad actual type',
-		actual: 123,
-		report: "actual-value: expected <%= actual %> to be a string"
+		label: 'bad value type',
+		value: 123,
+		report: "value: expected <%= value %> to be a string"
 	});
 	test.error({
 		label: 'bad expected type',

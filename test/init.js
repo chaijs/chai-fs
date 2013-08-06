@@ -64,7 +64,7 @@ describe('chai-fs', function () {
 
 			// simple non-nested call with no label or msg
 			if (_.isFunction(t)) {
-				it(styleName + ' basic', function () {
+				it(styleName, function () {
 					t(params);
 				});
 			}

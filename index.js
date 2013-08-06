@@ -15,7 +15,7 @@ module.exports = function (chai, utils) {
 		}
 		var obj = this._obj;
 
-		new chai.Assertion(obj, preMsg + 'actual-value').is.a('string');
+		new chai.Assertion(obj, preMsg + 'value').is.a('string');
 		new chai.Assertion(expected, preMsg + 'expected-value').is.a('string');
 
 		var actual = path.basename(obj);
@@ -45,7 +45,7 @@ module.exports = function (chai, utils) {
 		}
 		var obj = this._obj;
 
-		new chai.Assertion(obj, preMsg + 'actual-value').is.a('string');
+		new chai.Assertion(obj, preMsg + 'value').is.a('string');
 		new chai.Assertion(expected, preMsg + 'expected-value').is.a('string');
 
 		var actual = path.dirname(obj);
@@ -75,7 +75,7 @@ module.exports = function (chai, utils) {
 		}
 		var obj = this._obj;
 
-		new chai.Assertion(obj, preMsg + 'actual-value').is.a('string');
+		new chai.Assertion(obj, preMsg + 'value').is.a('string');
 		new chai.Assertion(expected, preMsg + 'expected-value').is.a('string');
 
 		var actual = path.extname(obj);
@@ -106,7 +106,7 @@ module.exports = function (chai, utils) {
 
 		var obj = this._obj;
 
-		new chai.Assertion(obj, preMsg + 'actual-value').is.a('string');
+		new chai.Assertion(obj, preMsg + 'value').is.a('string');
 
 		var pass = fs.existsSync(obj);
 
@@ -134,8 +134,8 @@ module.exports = function (chai, utils) {
 
 		var obj = this._obj;
 
-		new chai.Assertion(obj, preMsg + 'actual-value').is.a('string');
-		new chai.Assertion(obj, preMsg + 'actual-value').to.be.a.path();
+		new chai.Assertion(obj, preMsg + 'value').is.a('string');
+		new chai.Assertion(obj, preMsg + 'value').to.be.a.path();
 
 		var pass = fs.statSync(obj).isFile();
 
@@ -163,8 +163,8 @@ module.exports = function (chai, utils) {
 
 		var obj = this._obj;
 
-		new chai.Assertion(obj, preMsg + 'actual-value').is.a('string');
-		new chai.Assertion(obj, preMsg + 'actual-value').to.be.a.path();
+		new chai.Assertion(obj, preMsg + 'value').is.a('string');
+		new chai.Assertion(obj, preMsg + 'value').to.be.a.path();
 
 		var pass = fs.statSync(obj).isDirectory();
 
@@ -179,5 +179,43 @@ module.exports = function (chai, utils) {
 	};
 	assert.notPathIsDirectory = function (val, msg) {
 		new chai.Assertion(val).to.not.be.a.directory(msg);
+	};
+
+	//-------------------------------------------------------------------------------------------------------------
+
+	//TODO add utf8, base64, etc flags
+
+	Assertion.addMethod('content', function (expected, msg) {
+		var preMsg = '';
+		if (msg) {
+			flag(this, 'message', msg);
+			preMsg = msg + ': ';
+		}
+
+		var obj = this._obj;
+
+		new chai.Assertion(obj, preMsg + 'value').is.a('string');
+		new chai.Assertion(obj, preMsg + 'value').to.be.a.path();
+		new chai.Assertion(obj, preMsg + 'value').to.be.a.file();
+
+		new chai.Assertion(expected, preMsg + 'expected-value').is.a('string');
+
+		var content = fs.readFileSync(obj, 'utf8');
+
+		var pass = content === expected;
+
+		this.assert(
+			pass
+			, "expected #{this} to have content #{exp} but got #{act}"
+			, "expected #{this} not to have content #{exp} but got #{act}"
+			, expected
+			, content
+		);
+	});
+	assert.fileContent = function (val, exp, msg) {
+		new chai.Assertion(val).to.have.content(exp, msg);
+	};
+	assert.notFileContent = function (val, exp, msg) {
+		new chai.Assertion(val).to.have.content(exp, msg);
 	};
 };

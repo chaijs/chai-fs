@@ -8,31 +8,36 @@ describe(require('path').basename(__filename), function () {
 		"expect/should": {
 			base: {
 				"basic": function (params) {
-					expect(params.actual).to.be.a.path();
-					params.actual.should.be.a.path();
+					expect(params.value).to.be.a.path();
+					params.value.should.be.a.path();
 				},
 				"with message": {msg: true, call: function (params) {
-					expect(params.actual).to.be.a.path(params.msg);
-					params.actual.should.be.a.path(params.msg);
+					expect(params.value).to.be.a.path(params.msg);
+					params.value.should.be.a.path(params.msg);
 				}}
 			},
 			negate: function (params) {
-				expect(params.actual).to.not.be.a.path();
-				params.actual.should.not.be.a.path();
+				expect(params.value).to.not.be.a.path();
+				params.value.should.not.be.a.path();
 
 			}
 		},
 		assert: {
 			base: {
 				"basic": function (params) {
-					assert.pathExists(params.actual);
+					assert.pathExists(params.value);
 				},
 				"with message": {msg: true, call: function (params) {
-					assert.pathExists(params.actual, params.msg);
+					assert.pathExists(params.value, params.msg);
 				}}
 			},
-			negate: function (params) {
-				assert.notPathExists(params.actual);
+			negate: {
+				"basic": function (params) {
+					assert.notPathExists(params.value);
+				},
+				"with message": {msg: true, call: function (params) {
+					assert.notPathExists(params.value, params.msg);
+				}}
 			}
 		}
 	};
@@ -44,16 +49,16 @@ describe(require('path').basename(__filename), function () {
 	var test = chai.getStyleTest(styles, defaults);
 
 	test.valid({
-		actual: 'test/fixtures/alpha.txt',
-		report: "expected '<%= actual %>' not to exist"
+		value: 'test/fixtures/alpha.txt',
+		report: "expected '<%= value %>' not to exist"
 	});
 	test.invalid({
-		actual: 'test/fixtures/non-existing.txt',
-		report: "expected '<%= actual %>' to exist"
+		value: 'test/fixtures/non-existing.txt',
+		report: "expected '<%= value %>' to exist"
 	});
 	test.error({
-		label: 'bad actual type',
-		actual: 123,
-		report: "actual-value: expected <%= actual %> to be a string"
+		label: 'bad value type',
+		value: 123,
+		report: "value: expected <%= value %> to be a string"
 	});
 });

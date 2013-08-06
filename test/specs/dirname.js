@@ -8,36 +8,41 @@ describe(require('path').basename(__filename), function () {
 		expect: {
 			base: {
 				"basic": function (params) {
-					expect(params.actual).to.have.dirname(params.expected);
-					params.actual.should.have.dirname(params.expected);
+					expect(params.value).to.have.dirname(params.expected);
+					params.value.should.have.dirname(params.expected);
 				},
 				"with message": {msg: true, call: function (params) {
-					expect(params.actual).to.have.dirname(params.expected, params.msg);
-					params.actual.should.have.dirname(params.expected, params.msg);
+					expect(params.value).to.have.dirname(params.expected, params.msg);
+					params.value.should.have.dirname(params.expected, params.msg);
 				}}
 			},
 			negate: function (params) {
-				expect(params.actual).to.not.have.dirname(params.expected);
-				params.actual.should.not.have.dirname(params.expected);
+				expect(params.value).to.not.have.dirname(params.expected);
+				params.value.should.not.have.dirname(params.expected);
 			}
 		},
 		assert: {
 			base: {
 				"basic": function (params) {
-					assert.dirname(params.actual, params.expected);
+					assert.dirname(params.value, params.expected);
 				},
 				"with message": {msg: true, call: function (params) {
-					assert.dirname(params.actual, params.expected, params.msg);
+					assert.dirname(params.value, params.expected, params.msg);
 				}}
 			},
-			negate: function (params) {
-				assert.notDirname(params.actual, params.expected);
+			negate: {
+				"basic": function (params) {
+					assert.notDirname(params.value, params.expected);
+				},
+				"with message": {msg: true, call: function (params) {
+					assert.notDirname(params.value, params.expected, params.msg);
+				}}
 			}
 		}
 	};
 
 	var defaults = {
-		actual: '/dir/sub/file.ext',
+		value: '/dir/sub/file.ext',
 		msg: 'My Message'
 	};
 
@@ -45,16 +50,16 @@ describe(require('path').basename(__filename), function () {
 
 	test.valid({
 		expected: '/dir/sub',
-		report: "expected '<%= actual %>' not to have dirname '<%= expected %>' but got '/dir/sub'"
+		report: "expected '<%= value %>' not to have dirname '<%= expected %>' but got '/dir/sub'"
 	});
 	test.invalid({
 		expected: 'foo/bar',
-		report: "expected '<%= actual %>' to have dirname '<%= expected %>' but got '/dir/sub'"
+		report: "expected '<%= value %>' to have dirname '<%= expected %>' but got '/dir/sub'"
 	});
 	test.error({
-		label: 'bad actual type',
-		actual: 123,
-		report: "actual-value: expected <%= actual %> to be a string"
+		label: 'bad value type',
+		value: 123,
+		report: "value: expected <%= value %> to be a string"
 	});
 	test.error({
 		label: 'bad expected type',
