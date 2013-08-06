@@ -97,7 +97,7 @@ describe('chai-fs', function () {
 
 			// simple non-nested call with no label or msg
 			if (_.isFunction(t)) {
-				it(styleName + ' basic', function () {
+				it(styleName, function () {
 					expect(function () {
 						t(params);
 					}).to.fail(report);
@@ -126,6 +126,9 @@ describe('chai-fs', function () {
 		var wrap = function (func) {
 			return function (params) {
 				params = _.defaults(_.clone(params), def);
+				if (!params.hasOwnProperty('value')) {
+					throw( new Error('no value param'));
+				}
 				if (!params.hasOwnProperty('msg')) {
 					throw( new Error('no msg param'));
 				}

@@ -207,7 +207,7 @@ module.exports = function (chai, utils) {
 		this.assert(
 			pass
 			, "expected #{this} to have content #{exp} but got #{act}"
-			, "expected #{this} not to have content #{exp} but got #{act}"
+			, "expected #{this} not to have content #{exp}"
 			, expected
 			, content
 		);
@@ -216,6 +216,6 @@ module.exports = function (chai, utils) {
 		new chai.Assertion(val).to.have.content(exp, msg);
 	};
 	assert.notFileContent = function (val, exp, msg) {
-		new chai.Assertion(val).to.have.content(exp, msg);
+		new chai.Assertion(val).to.not.have.content(exp, msg);
 	};
 };

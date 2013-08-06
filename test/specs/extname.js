@@ -5,7 +5,7 @@ describe(require('path').basename(__filename), function () {
 	var assert = chai.assert;
 
 	var styles = {
-		expect: {
+		"expect/should": {
 			base: {
 				"basic": function (params) {
 					expect(params.value).to.have.extname(params.expected);

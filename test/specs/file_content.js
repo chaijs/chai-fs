@@ -46,17 +46,18 @@ describe(require('path').basename(__filename), function () {
 	var defaults = {
 		msg: 'My Message',
 		value: 'test/fixtures/alpha.txt',
+		actual: fs.readFileSync('test/fixtures/alpha.txt', 'utf8'),
 		expected: fs.readFileSync('test/fixtures/alpha.txt', 'utf8')
 	};
 
 	var test = chai.getStyleTest(styles, defaults);
-/*
+
 	test.valid({
-		report: "expected '<%= value %>' not to have content '<%= expected %>' but got '<%= value %>'"
+		report: "expected '<%= value %>' not to have content '<%= expected %>'"
 	});
 	test.invalid({
 		expected: 'Other content',
-		report: "expected '<%= value %>' to have content '<%= expected %>' but got '<%= value %>'"
+		report: "expected '<%= value %>' to have content '<%= expected %>' but got '<%= actual %>'"
 	});
 
 	test.error({
@@ -71,12 +72,12 @@ describe(require('path').basename(__filename), function () {
 	});
 	test.error({
 		label: 'bad expected type',
-		value: 123,
-		report: "expected-value: expected <%= value %> to be a string"
+		expected: 123,
+		report: "expected-value: expected <%= expected %> to be a string"
 	});
 	test.error({
 		label: 'bad value type',
 		value: 123,
 		report: "value: expected <%= value %> to be a string"
-	});*/
+	});
 });
