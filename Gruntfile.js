@@ -15,7 +15,7 @@ module.exports = function (grunt) {
 				src: [
 					'Gruntfile.js',
 					'index.js',
-					'test/*.js'
+					'test/**/*.js'
 				]
 			}
 		},
@@ -31,12 +31,6 @@ module.exports = function (grunt) {
 					reporter: 'Spec'
 				},
 				src: ['test/init.js', 'test/specs/*.js']
-			},
-			fail : {
-				options: {
-					reporter: 'Spec'
-				},
-				src: ['test/init.js', 'test/specs/fail.js']
 			}
 		}
 	});
@@ -45,8 +39,6 @@ module.exports = function (grunt) {
 	grunt.registerTask('build', ['jshint:all']);
 
 	grunt.registerTask('test', ['build', 'mochaTest:pass']);
-	grunt.registerTask('dev', ['build', 'mochaTest:fail']);
-
 	grunt.registerTask('run', ['build', 'mochaTest:spec']);
 
 };
