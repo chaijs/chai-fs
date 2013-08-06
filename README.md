@@ -4,7 +4,9 @@
 
 [Chai](http://chaijs.com/) assertions for Node.js file system api.
 
-Use `path` and synchronous `fs` to assert files and directories.
+Uses `path` and synchronous `fs` to assert files and directories.
+
+All assertions are available in `expect`, `should` and `assert` style, and support the optional, message parameter.
 
 ## Usage
 
@@ -21,64 +23,105 @@ Have chai use the chai-fs module:
 
 ### browser-side
 
-No `fs` and `path` (but browserify? phantomJS?)
+No file system (but browserify? phantomJS? message me if you tried!)
 
-## Assertions
+## Path assertions
 
-All assertions are available in BDD `expect`, `should` and TDD `assert` styles. 
+Wrappers around `require('path')`
 
-### basename(name)
+### basename
 
 Assert the return value of `path.basename(path)`
 
-	expect(path).to.have.basename(name)
-	expect(path).to.not.have.basename(name)
+	expect(path).to.have.basename(name, ?msg);
+	expect(path).to.not.have.basename(name, ?msg);
 	
-	path.should.have.basename(name)
-	path.should.not.have.basename(name)
+	path.should.have.basename(name, ?msg);
+	path.should.not.have.basename(name, ?msg);
 
-	assert.basename(path, name)
-	assert.notBasename(path, name)
+	assert.basename(path, name, ?msg);
+	assert.notBasename(path, name, ?msg);
 
-### dirname(name)
+### dirname
 
 Assert the return value of `path.dirname(path)`
 	
-	expect(path).to.have.dirname(name)
-	expect(path).to.not.have.dirname(name)
+	expect(path).to.have.dirname(name, ?msg);
+	expect(path).to.not.have.dirname(name, ?msg);
 	
-	path.should.have.dirname(name)
-	path.should.not.have.dirname(name)
+	path.should.have.dirname(name, ?msg);
+	path.should.not.have.dirname(name, ?msg);
 
-	assert.dirname(path, name)
-	assert.notDirname(path, name)
+	assert.dirname(path, name, ?msg);
+	assert.notDirname(path, name, ?msg);
 
-
-### extname(name)
+### extname
 
 Assert the return value of `path.extname(path)`
 	
-	expect(path).to.have.extname(name)
-	expect(path).to.not.have.extname(name)
+	expect(path).to.have.extname(name, ?msg);
+	expect(path).to.not.have.extname(name, ?msg);
 	
-	path.should.have.extname(name)
-	path.should.not.have.extname(name)
+	path.should.have.extname(name, ?msg);
+	path.should.not.have.extname(name, ?msg);
 
-	assert.extname(path, name)
-	assert.notExtname(path, name)
+	assert.extname(path, name, ?msg);
+	assert.notExtname(path, name, ?msg);
 
-## Coming up
+## Existence assertions
+
+### path
+
+Assert if the path exists.
+	
+	expect(path).to.be.a.path(?msg);
+	expect(path).to.not.be.a.path(?msg);
+	
+	path.should.be.a.path(?msg);
+	path.should.not.be.a.path(?msg);
+
+	assert.pathExists(path, ?msg);
+	assert.notPathExists(path, ?msg);
+
+Note: using Chai's `exists` chain would've been nice but gives issues with negations and the message parameter.
+
+### file
+
+Assert if the path exists and is a file.
+	
+	expect(path).to.be.a.file(?msg);
+	expect(path).to.not.be.a.file(?msg);
+	
+	path.should.be.a.file(?msg);
+	path.should.not.be.a.file(?msg);
+
+	assert.pathIsFile(path, ?msg);
+	assert.notPathIsFile(path, ?msg);
 
 
-	// type
-	expect(path).to.exist.as.path;
+### directory
 
-	expect(path).to.exist.as.file;
+Assert if the path exists and is a directory.
+	
+	expect(path).to.be.a.directory(?msg);
+	expect(path).to.not.be.a.directory(?msg);
+	
+	path.should.be.a.directory(?msg);
+	path.should.not.be.a.directory(?msg);
 
-	expect(path).to.exist.as.directory;
+	assert.pathIsDirectory(path, name, ?msg);
+	assert.notPathIsDirectory(path, name, ?msg);
+
+
+## Coming up next
+
+Some ideas for new assertions, exact format may change:
+
+Priority
 	
 	// content
 	expect(path).file.to.equal(dataOrRegExp);
+
 	expect(path).directory.to.be.empty;
 	
 	// content by path
@@ -87,7 +130,7 @@ Assert the return value of `path.extname(path)`
 	
 	// stat
 	expect(path).to.have.size(size);
-	expect(path).to.have.size(minSize, ? maxSize);
+	expect(path).to.have.size(minSize, maxSize);
 	
 Some to add later:
 	
@@ -99,7 +142,7 @@ Some to add later:
 	expect(path).to.have.uid(id);
 	expect(path).to.have.gid(id);
 
-	// some ideas for later
+	// some ideas for later (interface with chai-date-time?)
 	expect(path).to.have.atime.before(date);
 	expect(path).to.have.mtime.before(date);
 	expect(path).to.have.ctime.before(date);
