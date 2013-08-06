@@ -8,6 +8,8 @@ Uses `path` and synchronous `fs` to assert files and directories.
 
 All assertions are available in `expect`, `should` and `assert` style, and support the optional, message parameter.
 
+***Note:*** *This is a work in progress. The assertions may change at any time until the version is raised and things are published to NPM.*
+
 ## Usage
 
 ### server-side
@@ -109,8 +111,8 @@ Assert if the path exists and is a directory.
 	path.should.be.a.directory(?msg);
 	path.should.not.be.a.directory(?msg);
 
-	assert.pathIsDirectory(path, name, ?msg);
-	assert.notPathIsDirectory(path, name, ?msg);
+	assert.pathIsDirectory(path,  ?msg);
+	assert.notPathIsDirectory(path, ?msg);
 
 
 ## Coming up next
