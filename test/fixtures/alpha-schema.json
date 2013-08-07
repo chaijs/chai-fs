@@ -1,0 +1,12 @@
+{
+	"type": "object",
+	"required" : ["alpha"],
+	"properties" : {
+		"alpha": {
+			"type": "array",
+			"items" : {
+				"type" : "number"
+			}
+		}
+	}
+}

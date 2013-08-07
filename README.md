@@ -96,44 +96,6 @@ assert.pathExists(path, ?msg);
 assert.notPathExists(path, ?msg);
 ````
 
-### file()
-
-Assert if the path exists and is a file.
-
-* Uses `fs.statSync().isFile()`
-	
-````
-expect(path).to.be.a.file(?msg);
-expect(path).to.not.be.a.file(?msg);
-
-path.should.be.a.file(?msg);
-path.should.not.be.a.file(?msg);
-
-assert.isFile(path, ?msg);
-assert.notIsFile(path, ?msg);
-````
-
-
-### file().and.empty
-
-Assert if the path exists, is a file and contains nothing. 
-
-* Chains after `file()`
-* Uses `fs.statSync().size === 0`.
-* To negate this using `expect/should` you chain the `.not`-negation ***behind*** the regular `file()`.
-
-````
-expect(path).to.be.a.file(?msg).and.empty;
-expect(path).to.be.a.file(?msg).and.not.empty;
-
-path.should.be.a.file(?msg).and.empty;
-path.should.be.a.file(?msg).and.not.empty;
-
-assert.isEmptyFile(path, ?msg);
-assert.notIsEmptyFile(path, ?msg); 
-````
-
-
 ### directory()
 
 Assert if the path exists and is a directory.
@@ -157,7 +119,7 @@ Assert if the path exists, is a directory and contains nothing.
 
 * Chains after `directory()`
 * Uses `fs.readdirSync().length === 0`.
-* To negate this using `expect/should` you chain the `.not`-negation ***behind*** the regular `directory()`.
+* To negate this using `expect/should` you chain the `.not`-negation ***after*** the regular `directory()`.
 	
 ````
 expect(path).to.be.a.directory(?msg).and.empty;
@@ -170,12 +132,89 @@ assert.isEmptyDirectory(path, ?msg);
 assert.notIsEmptyDirectory(path, ?msg);
 ````
 
+### file()
+
+Assert if the path exists and is a file.
+
+* Uses `fs.statSync().isFile()`
+	
+````
+expect(path).to.be.a.file(?msg);
+expect(path).to.not.be.a.file(?msg);
+
+path.should.be.a.file(?msg);
+path.should.not.be.a.file(?msg);
+
+assert.isFile(path, ?msg);
+assert.notIsFile(path, ?msg);
+````
+
+### file().and.empty
+
+Assert if the path exists, is a file and contains nothing. 
+
+* Chains after `file()`
+* Uses `fs.statSync().size === 0`.
+* To negate this using `expect/should` you chain the `.not`-negation ***after*** the regular `file()`.
+
+````
+expect(path).to.be.a.file(?msg).and.empty;
+expect(path).to.be.a.file(?msg).and.not.empty;
+
+path.should.be.a.file(?msg).and.empty;
+path.should.be.a.file(?msg).and.not.empty;
+
+assert.isEmptyFile(path, ?msg);
+assert.notIsEmptyFile(path, ?msg); 
+````
+
+### file().with.json
+
+Assert if the path exists, is a file and contains json parsable text. 
+
+* Chains after `file()`
+* To negate this using `expect/should` you chain the `.not`-negation ***after*** the regular `file()`.
+* The `with` chain is just sugar.
+
+````
+expect(path).to.be.a.file(?msg).with.json;
+expect(path).to.be.a.file(?msg).with.not.json;
+
+path.should.be.a.file(?msg).with.json;
+path.should.be.a.file(?msg).with.not.json;
+
+assert.jsonFile(path, ?msg);
+assert.notJsonFile(path, ?msg); 
+````
+
+### file().using.json.schema(s);
+
+Assert if the path exists, is a file, contains json parsable text conforming to a JSON-Schema. 
+
+* Chains after `file().with.json`
+* Depends on [chai-json-schema](https://github.com/Bartvds/chai-json-schema)
+* To negate this using `expect/should` you chain the `.not`-negation ***after*** the regular `json`.
+* The `with` and `using` chains are just sugar.
+
+````
+expect(path).to.be.a.file(?msg).with.json.using.schema(s);
+expect(path).to.be.a.file(?msg).with.json.not.using.schema(s);
+
+path.should.be.a.file(?msg).with.json.using.schema(s);
+path.should.be.a.file(?msg).with.json.not.using.schema(s);
+
+assert.jsonSchemaFile(path, schema,?msg);
+assert.notJsonSchemaFile(path, schema, ?msg); 
+````
+
 ### content()
 
 Assert if the path exists, is a file and has specific content.
 
 * Reads file as utf8 text (planneds update to support base64, binary Buffer etc). 
-	   
+	
+:interrobang: - **add as chain behind file() and directory()** - :interrobang:
+   
 ````
 expect(path).to.have.content(data, ?msg);
 expect(path).to.not.have.content(data, ?msg);
@@ -187,7 +226,6 @@ assert.fileContent(path, data, ?msg);
 assert.notFileContent(path, data, ?msg);
 ````
 
-
 ## Future additions
 
 Some ideas for new assertions:
@@ -198,7 +236,6 @@ expect(path).to.be.a.file(msg).and.equal(otherPath);
 expect(path).to.be.a.file(msg).and.deep.equal(otherPath); // + mtime, uid, gid
 
 // content types
-expect(path).to.be.a.file(msg).with.json;
 expect(path).to.be.a.file(msg).with.xml;
 
 // stat
@@ -217,6 +254,10 @@ expect(path).to.be.executable();
 expect(path).to.be.readableBy(uid_gid_string);
 expect(path).to.be.writableBy(uid_gid_string);
 expect(path).to.be.executableBy(uid_gid_string);
+
+expect(path).to.be.have.linux.lineSeperator();
+expect(path).to.be.have.mac.lineSeperator();
+expect(path).to.be.have.windows.lineSeperator();
 
 // paths
 expect(path).to.be.parent.of(other);
