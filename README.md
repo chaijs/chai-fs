@@ -8,7 +8,7 @@ Uses `path` and synchronous `fs` to assert files and directories.
 
 All assertions are available in `expect`, `should` and `assert` style, and support the optional, message parameter.
 
-***Note:*** *This is a work in progress. The assertions may change at any time until the version is raised and things are published to NPM and the Chai plugin directory.*
+:warning: *This is a work in progress. The assertions may change at any time until the version is raised and things are published to NPM and the Chai plugin directory.*
 
 ## Usage
 
@@ -228,7 +228,7 @@ assert.notFileContent(path, data, ?msg);
 
 ## Future additions
 
-Some ideas for new assertions:
+Some ideas for new assertions. I'll add those in batches when I got a use case.
 
 ````
 // content by path
@@ -280,12 +280,37 @@ expect(path).to.have.mtime.after(date);
 expect(path).to.have.ctime.after(date);
 ````
 
-
 ## History
 
-* 0.0.1 - Git pre-aplha release
+* 0.0.1 - Git pre-alpha release
 
-## Build
+## Contributing
+
+Contributions are welcome. Please follow the code, test and style patterns and keep JSHint happy.  
+
+### Test generator
+
+Look into the existing tests and notice the generator pattern used to generate tests for all aspects of the assertions while keeping the specs DRY. 
+
+The pattern splits the test into a style declaration tree and a set of variation on 3 types of test scenarios. The generator then combines ('multiplies') every scenario variation with the style tree data to get good coverage of all cases.
+
+The style tree defines ways to use the assertions: first level is the style: expect/should and assert. Then it defines both the normal use and the negation, and divides those into different invocations patterns for each style. So you can test with/without message, or as a chained method or property etc.
+
+The tests are ways to specify assertion and the test expectations. 
+
+* Valid means a test that will pass with that data (but fail the negation)
+* Invalid means a test that will fail the assertion (but pass the negation). 
+* Error means a test that will always fail (even when negated) because the data is invalid (bad data type, missing parameters etc). 
+
+The report field is used the verify the error message if the test fails.
+
+#### Why?
+
+This looks a bit complex and cumbersome but it does allow to quickly add large amount of detailed tests for all assertions. It seems to work empowering so I might extract this to a separate npm module later.
+
+It will generate a large amount of case variations so a small error in the code or your test data can explode in a many failing assertions. Look closely at which tests are failing tests to see what is causing what.
+
+## Build & test
 
 Install development dependencies in your git checkout:
 
@@ -300,6 +325,14 @@ Build and run tests:
     $ grunt
 
 See the `Gruntfile` for additional commands.
+
+### Vagrant
+
+There is a Vagrantfile and set of Chef cookbooks to use with [Vagrant](http://www.vagrantup.com) for easy testing on a Linux VM. It will install a node.js from package, install the dependencies and enable grunt.
+
+Using this is especially important for platform specific features, like working with file permissions. I'm still looking for a way to get this testable on Windows and MacOS. (Microsoft does provide free VM's but Apple is obnoxious so the VM boxes have to use a licenced Mac OS (or download a pirated one from bittorrent).
+
+If you don't already have Vagrant see the [documentation](http://docs.vagrantup.com/v2/getting-started/index.html). Otherwise just run `vagrant up` from your console to boot it.
 
 ## License
 

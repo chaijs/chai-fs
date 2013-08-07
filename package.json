@@ -25,7 +25,7 @@
     "assertion",
     "json-schema"
   ],
-  "main": "index.js",
+  "main": "lib/index.js",
   "readmeFilename": "README.md",
   "engines": {
     "node": ">= 0.6.0"
@@ -45,5 +45,7 @@
     "underscore": "~1.5.1",
     "chai-json-schema": "~1.0.4"
   },
-  "dependencies": {}
+  "dependencies": {
+    "bit-mask": "0.0.2-alpha"
+  }
 }
