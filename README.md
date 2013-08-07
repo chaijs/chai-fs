@@ -283,7 +283,7 @@ expect(path).to.have.ctime.after(date);
 
 ## History
 
-* 0.0.0 - Not released
+* 0.0.1 - Git pre-aplha release
 
 ## Build
 

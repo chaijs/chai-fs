@@ -1,6 +1,6 @@
 {
   "name": "chai-fs",
-  "version": "1.0.4",
+  "version": "0.0.1",
   "description": "Chai assertions for Node.js file system api",
   "author": {
     "name": "Bart van der Schoor",

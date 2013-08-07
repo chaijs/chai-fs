@@ -3,8 +3,15 @@
 .gitmodules
 .travis.yml
 .jshintrc
+
 bower.json
+component.json
+
 Gruntfile.js
+
+/.vagrant
+/cookbooks
+/Vagrantfile
 
 /.idea
 /node_modules
