@@ -6,7 +6,7 @@
 
 All assertions are available in `expect`, `should` and `assert` style, and support the optional, message parameter.
 
-:warning: Note: this plugin is in a usable public alpha state: the assertions itself seem  solid enough but need a bit more real world use before publishing to the plugin library. API might still change before it reaches version 0.1.0.
+:warning: Usable public alpha state: the assertions itself seem  solid enough but need a bit more real world use before publishing to the plugin library. API might still change before it reaches version 0.1.0.
 
 ## Usage
 
@@ -109,7 +109,7 @@ assert.notIsDirectory(path, ?msg);
 
 ### directory().and.empty
 
-Assert if the path exists, is a directory and contains nothing. 
+Assert if the path exists, is a directory and has zero contents. 
 
 * Chains after `directory()`
 * Uses `fs.readdirSync().length === 0`.
@@ -145,7 +145,7 @@ assert.notIsFile(path, ?msg);
 
 ### file().and.empty
 
-Assert if the path exists, is a file and contains nothing. 
+Assert if the path exists, is a file and has zero size. 
 
 * Chains after `file()`
 * Uses `fs.statSync().size === 0`.
@@ -183,11 +183,11 @@ assert.notJsonFile(path, ?msg);
 
 ### file().using.json.schema(obj);
 
-Assert if the path exists, is a file, contains json parsable text and conforms to given JSON-Schema. 
+Assert if the path exists, is a file, contains json parsable text conforming to given JSON-Schema.
 
 * Chains after `file().with.json`
 * The schema parameter must be a valid JSON-Schema v4. 
-* Depends on the [chai-json-schema](https://github.com/Bartvds/chai-json-schema) plugin to be installed separately and activated with `chai.use()`.
+* Depends on the [chai-json-schema](https://github.com/Bartvds/chai-json-schema) plugin to be separately activated with `chai.use()`.
 * To negate this using `expect/should` you chain the `.not`-negation ***after*** the regular `json`.
 * The `with` and `using` chains are just syntax sugar.
 
@@ -219,7 +219,7 @@ assert.fileContent(path, data, ?msg);
 assert.notFileContent(path, data, ?msg);
 ````
 
-:interrobang: - *In a future version this might be added this as a chain behind file() and directory()* 
+:interrobang: - *In a future version this might be supported as a chain behind file() and directory()* 
 
 ###  Planned assertions
 
@@ -249,11 +249,11 @@ Build and run tests:
 
 See the `Gruntfile` for additional commands.
 
-### Test generator
+### :wrench: Test generator
 
-This plugin uses a prototype of an "assertion plugin test-case generator".
+This plugin uses a prototype of an "assertion plugin test generator". :
 
-Look into the existing tests and notice the generator pattern used to generate tests for all aspects of the assertions while keeping the specs DRY. 
+Check the existing tests and notice the generator pattern used to generate tests for all aspects of the assertions while keeping the specs DRY. 
 
 The pattern splits the test into a style declaration tree and a set of variation on 3 types of test scenarios. The generator then combines ('multiplies') every scenario variation with the style tree data to get good coverage of all cases.
 
@@ -261,17 +261,17 @@ The style tree defines ways to use an assertion: first level is the style: expec
 
 The tests are ways to specify assertions and the test expectations. 
 
-* Valid means a test that will pass with that data (but fail the negation)
-* Invalid means a test that will fail the assertion (but pass the negation). 
-* Error means a test that will always fail (even when negated) because the data is invalid (bad data type, missing parameters etc). 
+* `valid`  - test expected to pass (but fail the negation)
+* `invalid` - test expected to fail (but pass the negation). 
+* `error` - test expected to always fail (even when negated), because the data is invalid (eg: bad data type, missing parameters etc). 
 
-The report field is used the verify the error message if the test fails.
+The report field is used the verify the error message if the test fails. It supports a simple template format using the assertion data object.
 
 #### Why?
 
 This looks a bit complex and cumbersome but it does allow to quickly add large amount of detailed tests for all assertions. So far it seems to work empowering so I might extract this to a separate npm module later.
 
-Note it will generate a large amount of case variations so a small error in the code or your test data can explode in a many failing assertions. Look closely at which tests are failing to see what is causing what.
+Note it will generate a large amount of case variations so a small error in the code or your test setup can explode in a many failing assertions. Look closely at which tests are failing to see what is causing what.
 
 ## Vagrant
 
