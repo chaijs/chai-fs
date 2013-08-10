@@ -12,6 +12,7 @@ Gruntfile.js
 /.vagrant
 /cookbooks
 /Vagrantfile
+/docs
 
 /.idea
 /node_modules
