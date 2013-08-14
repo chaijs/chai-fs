@@ -3,7 +3,7 @@ module.exports = function (chai, _) {
 	//var assert = chai.assert;
 	var expect = chai.expect;
 
-	// based on copy from chai-fuzzy
+	// based on a snippet from chai-fuzzy
 	chai.use(function (chai, utils) {
 		//var objDisplay = utils.objDisplay;
 		var inspect = utils.inspect;

@@ -3,6 +3,7 @@ module.exports = function (grunt) {
 
 	grunt.loadNpmTasks('grunt-mocha-test');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
+	grunt.loadNpmTasks('grunt-contrib-clean');
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
@@ -18,6 +19,9 @@ module.exports = function (grunt) {
 					'test/**/*.js'
 				]
 			}
+		},
+		clean: {
+			tmp: ['tmp/**/*', 'test/tmp**/*']
 		},
 		mochaTest: {
 			options: {
@@ -36,7 +40,7 @@ module.exports = function (grunt) {
 	});
 
 	grunt.registerTask('default', ['test']);
-	grunt.registerTask('build', ['jshint:all']);
+	grunt.registerTask('build', ['clean', 'jshint:all']);
 
 	grunt.registerTask('test', ['build', 'mochaTest:pass']);
 	grunt.registerTask('run', ['build', 'mochaTest:spec']);

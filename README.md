@@ -2,7 +2,7 @@
 
 [![Build Status](https://secure.travis-ci.org/Bartvds/chai-fs.png?branch=master)](http://travis-ci.org/Bartvds/chai-fs) [![Dependency Status](https://gemnasium.com/Bartvds/chai-fs.png)](https://gemnasium.com/Bartvds/chai-fs) [![NPM version](https://badge.fury.io/js/chai-fs.png)](http://badge.fury.io/js/chai-fs)
 
-[Chai](http://chaijs.com/) assertion plugins for the Node.js file system API. Uses `path` and synchronous `fs` to assert files and directories.
+[Chai](http://chaijs.com/) assertion plugins for the Node.js filesystem API. Uses `path` and synchronous `fs` to assert files and directories.
 
 All assertions are available in `expect`, `should` and `assert` style, and support the optional, message parameter.
 
@@ -74,10 +74,9 @@ assert.notExtname(path, name, ?msg);
 
 ### path()
 
-Assert if the path exists.
+Assert the path exists.
 
 * Uses `fs.existsSync()`.
-* Making use of Chai's `exist` to chain would've been nice *but* has issues with negations and the message parameter.
 
 ````
 expect(path).to.be.a.path(?msg);
@@ -90,9 +89,11 @@ assert.pathExists(path, ?msg);
 assert.notPathExists(path, ?msg);
 ````
 
+* Making use of Chai's `exist` to chain would've been nice *but* has issues with negations and the message parameter.
+
 ### directory()
 
-Assert if the path exists and is a directory.
+Assert the path exists and is a directory.
 	
 * Uses `fs.statSync().isDirectory()`
 
@@ -109,7 +110,7 @@ assert.notIsDirectory(path, ?msg);
 
 ### directory().and.empty
 
-Assert if the path exists, is a directory and has zero contents. 
+Assert the path exists, is a directory and contains zero item. 
 
 * Chains after `directory()`
 * Uses `fs.readdirSync().length === 0`.
@@ -128,7 +129,7 @@ assert.notIsEmptyDirectory(path, ?msg);
 
 ### file()
 
-Assert if the path exists and is a file.
+Assert the path exists and is a file.
 
 * Uses `fs.statSync().isFile()`
 	
@@ -145,7 +146,7 @@ assert.notIsFile(path, ?msg);
 
 ### file().and.empty
 
-Assert if the path exists, is a file and has zero size. 
+Assert the path exists, is a file and has zero size. 
 
 * Chains after `file()`
 * Uses `fs.statSync().size === 0`.
@@ -164,7 +165,7 @@ assert.notIsEmptyFile(path, ?msg);
 
 ### file().with.json
 
-Assert if the path exists, is a file and contains json parsable text. 
+Assert the path exists, is a file and contains json parsable text. 
 
 * Chains after `file()`
 * To negate this using `expect/should` you chain the `.not`-negation ***after*** the regular `file()`.
@@ -181,9 +182,9 @@ assert.jsonFile(path, ?msg);
 assert.notJsonFile(path, ?msg); 
 ````
 
-### file().using.json.schema(obj);
+### file().using.json.schema(obj)
 
-Assert if the path exists, is a file, contains json parsable text conforming to given JSON-Schema.
+Assert the path exists, is a file, contains json parsable text conforming to given JSON-Schema.
 
 * Chains after `file().with.json`
 * The schema parameter must be a valid JSON-Schema v4. 
@@ -204,7 +205,7 @@ assert.notJsonSchemaFile(path, schema, ?msg);
 
 ### content()
 
-Assert if the path exists, is a file and has specific content.
+Assert the path exists, is a file and has specific content.
 
 * Reads file as utf8 text (planneds update to support base64, binary Buffer etc). 
    
