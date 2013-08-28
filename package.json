@@ -1,7 +1,7 @@
 {
   "name": "chai-fs",
-  "version": "0.0.1",
-  "description": "Chai assertions for Node.js filesystem api",
+  "version": "0.0.2",
+  "description": "Chai assertions for Node.js filesystem",
   "author": {
     "name": "Bart van der Schoor",
     "url": "https://github.com/Bartvds"
@@ -51,7 +51,8 @@
     "jshint-path-reporter": "~0.1",
     "mkdirp": "0.3.5",
     "underscore": "1.5.1",
-    "chai-json-schema": "1.0.4"
+    "chai-json-schema": "1.0.4",
+    "grunt-bump": "0.0.11"
   },
   "peerDependencies": {
     "chai": ">= 1.6.1 < 2"

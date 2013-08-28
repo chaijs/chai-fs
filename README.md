@@ -2,11 +2,11 @@
 
 [![Build Status](https://secure.travis-ci.org/Bartvds/chai-fs.png?branch=master)](http://travis-ci.org/Bartvds/chai-fs) [![Dependency Status](https://gemnasium.com/Bartvds/chai-fs.png)](https://gemnasium.com/Bartvds/chai-fs) [![NPM version](https://badge.fury.io/js/chai-fs.png)](http://badge.fury.io/js/chai-fs)
 
-[Chai](http://chaijs.com/) assertion plugins for the Node.js filesystem API. Uses `path` and synchronous `fs` to assert files and directories.
+[Chai](http://chaijs.com/) assertion [plugin](http://chaijs.com/plugins/chai-fs) for the Node.js filesystem API. Uses `path` and synchronous `fs` to assert files and directories.
 
 All assertions are available in `expect`, `should` and `assert` style, and support the optional, message parameter.
 
-:warning: Usable public alpha state: the assertions itself seem  solid enough but need a bit more real world use before publishing to the plugin library. API might still change before it reaches version 0.1.0.
+:warning: API might change before we reach version 0.1.0.
 
 ## Usage
 
@@ -228,6 +228,7 @@ There are some ideas for future assertions stashed [in this document](https://gi
 
 ## History
 
+* 0.0.2 - Plugin release
 * 0.0.1 - Alpha release
 
 ## Contributing
@@ -252,9 +253,7 @@ See the `Gruntfile` for additional commands.
 
 ### :wrench: Test generator
 
-This plugin uses a prototype of an "assertion plugin test generator". :
-
-Check the existing tests and notice the generator pattern used to generate tests for all aspects of the assertions while keeping the specs DRY. 
+This plugin uses a prototype of an "assertion plugin test generator" to generates tests for all aspects of the assertions while keeping the specs DRY. 
 
 The pattern splits the test into a style declaration tree and a set of variation on 3 types of test scenarios. The generator then combines ('multiplies') every scenario variation with the style tree data to get good coverage of all cases.
 
@@ -272,15 +271,15 @@ The report field is used the verify the error message if the test fails. It supp
 
 This looks a bit complex and cumbersome but it does allow to quickly add large amount of detailed tests for all assertions. So far it seems to work empowering so I might extract this to a separate npm module later.
 
-Note it will generate a large amount of case variations so a small error in the code or your test setup can explode in a many failing assertions. Look closely at which tests are failing to see what is causing what.
+Note it will generate a large amount of case variations so a small error in the code or your test setup can explode the suite wit a many failing assertions. Look closely at which tests are failing to see what is causing what.
 
 ## Vagrant
 
 There is a Vagrantfile and set of Chef cookbooks to use with [Vagrant](http://www.vagrantup.com) for easy testing on a Linux VM. It will install a node.js from package, install the dependencies and enable grunt.
 
-Using this is especially important for platform specific features, like working with file permissions. I'm still looking for a way to get this testable on Windows and MacOS. (Microsoft does provide free VM's but Apple is obnoxious so the VM boxes have to use a licenced Mac OS (or download a pirated one from bittorrent).
+Using this is especially important for platform specific features, like working with file permissions. I'm still looking for a way to get this testable on Windows and MacOS.
 
-If you don't already have Vagrant see the [documentation](http://docs.vagrantup.com/v2/getting-started/index.html). Otherwise just run `vagrant up` from your console to boot it.
+If you don't already have Vagrant see the [documentation](http://docs.vagrantup.com/v2/getting-started/index.html).
 
 ## License
 
