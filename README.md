@@ -31,160 +31,155 @@ No file system.
 
 Assert the return value of `path.basename(path)`
 
-````
-expect(path).to.have.basename(name, ?msg);
-expect(path).to.not.have.basename(name, ?msg);
+	expect(path).to.have.basename(name, ?msg);
+	expect(path).to.not.have.basename(name, ?msg);
+	
+	path.should.have.basename(name, ?msg);
+	path.should.not.have.basename(name, ?msg);
+	
+	assert.basename(path, name, ?msg);
+	assert.notBasename(path, name, ?msg);
 
-path.should.have.basename(name, ?msg);
-path.should.not.have.basename(name, ?msg);
-
-assert.basename(path, name, ?msg);
-assert.notBasename(path, name, ?msg);
-````
 
 ### dirname()
 
 Assert the return value of `path.dirname(path)`
 
-````	
-expect(path).to.have.dirname(name, ?msg);
-expect(path).to.not.have.dirname(name, ?msg);
+	expect(path).to.have.dirname(name, ?msg);
+	expect(path).to.not.have.dirname(name, ?msg);
+	
+	path.should.have.dirname(name, ?msg);
+	path.should.not.have.dirname(name, ?msg);
+	
+	assert.dirname(path, name, ?msg);
+	assert.notDirname(path, name, ?msg);
 
-path.should.have.dirname(name, ?msg);
-path.should.not.have.dirname(name, ?msg);
-
-assert.dirname(path, name, ?msg);
-assert.notDirname(path, name, ?msg);
-````
 
 ### extname()
 
 Assert the return value of `path.extname(path)`
+
+	expect(path).to.have.extname(name, ?msg);
+	expect(path).to.not.have.extname(name, ?msg);
 	
-````
-expect(path).to.have.extname(name, ?msg);
-expect(path).to.not.have.extname(name, ?msg);
+	path.should.have.extname(name, ?msg);
+	path.should.not.have.extname(name, ?msg);
+	
+	assert.extname(path, name, ?msg);
+	assert.notExtname(path, name, ?msg);
 
-path.should.have.extname(name, ?msg);
-path.should.not.have.extname(name, ?msg);
-
-assert.extname(path, name, ?msg);
-assert.notExtname(path, name, ?msg);
-````
 
 ### path()
 
 Assert the path exists.
 
-* Uses `fs.existsSync()`.
+Uses `fs.existsSync()`.
 
-````
-expect(path).to.be.a.path(?msg);
-expect(path).to.not.be.a.path(?msg);
+	expect(path).to.be.a.path(?msg);
+	expect(path).to.not.be.a.path(?msg);
+	
+	path.should.be.a.path(?msg);
+	path.should.not.be.a.path(?msg);
+	
+	assert.pathExists(path, ?msg);
+	assert.notPathExists(path, ?msg);
 
-path.should.be.a.path(?msg);
-path.should.not.be.a.path(?msg);
 
-assert.pathExists(path, ?msg);
-assert.notPathExists(path, ?msg);
-````
-
-* Making use of Chai's `exist` to chain would've been nice *but* has issues with negations and the message parameter.
+Use of Chai's `exist`-chain would've been nice *but* has issues with negations and the message parameter. So don't do that.
 
 ### directory()
 
 Assert the path exists and is a directory.
 	
-* Uses `fs.statSync().isDirectory()`
+Uses `fs.statSync().isDirectory()`
 
-````
-expect(path).to.be.a.directory(?msg);
-expect(path).to.not.be.a.directory(?msg);
-
-path.should.be.a.directory(?msg);
-path.should.not.be.a.directory(?msg);
-
-assert.isDirectory(path,  ?msg);
-assert.notIsDirectory(path, ?msg);
-````
+	expect(path).to.be.a.directory(?msg);
+	expect(path).to.not.be.a.directory(?msg);
+	
+	path.should.be.a.directory(?msg);
+	path.should.not.be.a.directory(?msg);
+	
+	assert.isDirectory(path,  ?msg);
+	assert.notIsDirectory(path, ?msg);
 
 ### directory().and.empty
 
 Assert the path exists, is a directory and contains zero item. 
 
+	expect(path).to.be.a.directory(?msg).and.empty;
+	expect(path).to.be.a.directory(?msg).and.not.empty;
+	
+	path.should.be.a.directory(?msg).and.empty;
+	path.should.be.a.directory(?msg).and.not.empty;
+	
+	assert.isEmptyDirectory(path, ?msg);
+	assert.notIsEmptyDirectory(path, ?msg);
+
 * Chains after `directory()`
 * Uses `fs.readdirSync().length === 0`.
 * To negate this using `expect/should` you chain the `.not`-negation ***after*** the regular `directory()`.
-	
-````
-expect(path).to.be.a.directory(?msg).and.empty;
-expect(path).to.be.a.directory(?msg).and.not.empty;
-
-path.should.be.a.directory(?msg).and.empty;
-path.should.be.a.directory(?msg).and.not.empty;
-
-assert.isEmptyDirectory(path, ?msg);
-assert.notIsEmptyDirectory(path, ?msg);
-````
 
 ### file()
 
 Assert the path exists and is a file.
 
-* Uses `fs.statSync().isFile()`
+Uses `fs.statSync().isFile()`
+
+	expect(path).to.be.a.file(?msg);
+	expect(path).to.not.be.a.file(?msg);
 	
-````
-expect(path).to.be.a.file(?msg);
-expect(path).to.not.be.a.file(?msg);
-
-path.should.be.a.file(?msg);
-path.should.not.be.a.file(?msg);
-
-assert.isFile(path, ?msg);
-assert.notIsFile(path, ?msg);
-````
+	path.should.be.a.file(?msg);
+	path.should.not.be.a.file(?msg);
+	
+	assert.isFile(path, ?msg);
+	assert.notIsFile(path, ?msg);
 
 ### file().and.empty
 
 Assert the path exists, is a file and has zero size. 
 
+	expect(path).to.be.a.file(?msg).and.empty;
+	expect(path).to.be.a.file(?msg).and.not.empty;
+	
+	path.should.be.a.file(?msg).and.empty;
+	path.should.be.a.file(?msg).and.not.empty;
+	
+	assert.isEmptyFile(path, ?msg);
+	assert.notIsEmptyFile(path, ?msg); 
+
 * Chains after `file()`
 * Uses `fs.statSync().size === 0`.
 * To negate this using `expect/should` you chain the `.not`-negation ***after*** the regular `file()`.
-
-````
-expect(path).to.be.a.file(?msg).and.empty;
-expect(path).to.be.a.file(?msg).and.not.empty;
-
-path.should.be.a.file(?msg).and.empty;
-path.should.be.a.file(?msg).and.not.empty;
-
-assert.isEmptyFile(path, ?msg);
-assert.notIsEmptyFile(path, ?msg); 
-````
 
 ### file().with.json
 
 Assert the path exists, is a file and contains json parsable text. 
 
+	expect(path).to.be.a.file(?msg).with.json;
+	expect(path).to.be.a.file(?msg).with.not.json;
+	
+	path.should.be.a.file(?msg).with.json;
+	path.should.be.a.file(?msg).with.not.json;
+	
+	assert.jsonFile(path, ?msg);
+	assert.notJsonFile(path, ?msg); 
+
 * Chains after `file()`
 * To negate this using `expect/should` you chain the `.not`-negation ***after*** the regular `file()`.
 * The `with` chain is just syntax sugar.
 
-````
-expect(path).to.be.a.file(?msg).with.json;
-expect(path).to.be.a.file(?msg).with.not.json;
-
-path.should.be.a.file(?msg).with.json;
-path.should.be.a.file(?msg).with.not.json;
-
-assert.jsonFile(path, ?msg);
-assert.notJsonFile(path, ?msg); 
-````
-
 ### file().using.json.schema(obj)
 
 Assert the path exists, is a file, contains json parsable text conforming to given JSON-Schema.
+
+	expect(path).to.be.a.file(?msg).with.json.using.schema(obj);
+	expect(path).to.be.a.file(?msg).with.json.not.using.schema(obj);
+	
+	path.should.be.a.file(?msg).with.json.using.schema(obj);
+	path.should.be.a.file(?msg).with.json.not.using.schema(obj);
+	
+	assert.jsonSchemaFile(path, schema,?msg);
+	assert.notJsonSchemaFile(path, schema, ?msg); 
 
 * Chains after `file().with.json`
 * The schema parameter must be a valid JSON-Schema v4. 
@@ -192,39 +187,26 @@ Assert the path exists, is a file, contains json parsable text conforming to giv
 * To negate this using `expect/should` you chain the `.not`-negation ***after*** the regular `json`.
 * The `with` and `using` chains are just syntax sugar.
 
-````
-expect(path).to.be.a.file(?msg).with.json.using.schema(obj);
-expect(path).to.be.a.file(?msg).with.json.not.using.schema(obj);
-
-path.should.be.a.file(?msg).with.json.using.schema(obj);
-path.should.be.a.file(?msg).with.json.not.using.schema(obj);
-
-assert.jsonSchemaFile(path, schema,?msg);
-assert.notJsonSchemaFile(path, schema, ?msg); 
-````
-
 ### content()
 
 Assert the path exists, is a file and has specific content.
 
-* Reads file as utf8 text (planneds update to support base64, binary Buffer etc). 
-   
-````
-expect(path).to.have.content(data, ?msg);
-expect(path).to.not.have.content(data, ?msg);
+	expect(path).to.have.content(data, ?msg);
+	expect(path).to.not.have.content(data, ?msg);
+	
+	path.should.have.content(data, ?msg);
+	path.should.not.have.content(data, ?msg);
+	
+	assert.fileContent(path, data, ?msg);
+	assert.notFileContent(path, data, ?msg);
 
-path.should.have.content(data, ?msg);
-path.should.not.have.content(data, ?msg);
+* Reads file as utf8 text (could update to support base64, binary Buffer etc). 
 
-assert.fileContent(path, data, ?msg);
-assert.notFileContent(path, data, ?msg);
-````
-
-:interrobang: - *In a future version this might be supported as a chain behind file() and directory()* 
+Note: *In a future version this might be supported as a chain behind file() and directory()* 
 
 ###  Planned assertions
 
-There are some ideas for future assertions stashed [in this document](https://github.com/Bartvds/chai-fs/tree/master/docs/planned.md).
+There are some ideas for future assertions saved [in this document](https://github.com/Bartvds/chai-fs/tree/master/docs/planned.md).
 
 ## History
 
