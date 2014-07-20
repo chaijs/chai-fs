@@ -204,6 +204,23 @@ Assert the path exists, is a file and has specific content.
 
 Note: *In a future version this might be supported as a chain behind file() and directory()* 
 
+### content_that_match()
+
+Assert the path exists, is a file and has content that match the regular expression.
+
+	expect(path).to.have.content_that_match(regExp, ?msg);
+	expect(path).to.not.have.content_that_match(regExp, ?msg);
+	
+	path.should.have.content_that_match(regExp, ?msg);
+	path.should.not.have.content_that_match(regExp, ?msg);
+	
+	assert.fileContentMatch(path, regExp, ?msg);
+	assert.notFileContentMatch(path, regExp, ?msg);
+
+* Reads file as utf8 text.
+
+Note: *In a future version this might be supported as a chain behind file() and directory()* 
+
 ###  Planned assertions
 
 There are some ideas for future assertions saved [in this document](https://github.com/Bartvds/chai-fs/tree/master/docs/planned.md).
