@@ -18,3 +18,7 @@ Gruntfile.js
 /node_modules
 /test
 /*.tgz
+
+*~
+*.swp
+*.swo
