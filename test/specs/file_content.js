@@ -14,12 +14,15 @@ describe(require('path').basename(__filename), function () {
 				"with message": {msg: true, call: function (params) {
 					expect(params.value).to.have.content(params.expected, params.msg);
 					params.value.should.have.content(params.expected, params.msg);
-				}}
+				}},
+				"chaining": function (params) {
+					expect(params.value).to.have.content.ok(params.expected);
+          params.value.should.have.content.ok(params.expected);
+				}
 			},
 			negate: function (params) {
 				expect(params.value).to.not.have.content(params.expected);
 				params.value.should.not.have.content(params.expected);
-
 			}
 		},
 		assert: {
