@@ -4,10 +4,10 @@ describe(require('path').basename(__filename), function () {
 	var expect = chai.expect;
 	var assert = chai.assert;
 
-  it('should leave an original match() method unaffected', function(){
-    expect('abababa').to.match(/^abababa$/);
-    expect('abababa').to.not.match(/cabadaba/);
-  });
+	it('should leave an original match() method unaffected', function(){
+		expect('abababa').to.match(/^abababa$/);
+		expect('abababa').to.not.match(/cabadaba/);
+	});
 
 	var styles = {
 		"expect/should": {

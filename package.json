@@ -1,6 +1,6 @@
 {
   "name": "chai-fs",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "Chai assertions for Node.js filesystem",
   "author": {
     "name": "Bart van der Schoor",
@@ -41,18 +41,18 @@
     "bit-mask": "0.0.2-alpha"
   },
   "devDependencies": {
-    "chai": "1.6.1",
-    "grunt": "0.4.1",
-    "grunt-cli": "0.1",
-    "grunt-mocha-test": "0.5.0",
-    "grunt-contrib-jshint": "0.6.3",
-    "grunt-contrib-clean": "0.5.0",
-    "mocha-unfunk-reporter": "~0.2",
-    "jshint-path-reporter": "~0.1",
-    "mkdirp": "0.3.5",
-    "underscore": "1.5.1",
+    "chai": "^1.9.1",
     "chai-json-schema": "1.0.4",
-    "grunt-bump": "0.0.11"
+    "grunt": "0.4.1",
+    "grunt-bump": "0.0.11",
+    "grunt-cli": "0.1",
+    "grunt-contrib-clean": "0.5.0",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-mocha-test": "^0.11.0",
+    "jshint-path-reporter": "~0.1",
+    "mkdirp": "^0.5.0",
+    "mocha-unfunk-reporter": "^0.4.0",
+    "underscore": "^1.6.0"
   },
   "peerDependencies": {
     "chai": ">= 1.6.1 < 2"

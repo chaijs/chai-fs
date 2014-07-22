@@ -4,7 +4,7 @@ var _ = require('underscore');
 var chai_fs = require('../lib/index');
 
 var chai = require('chai');
-chai.Assertion.includeStack = true;
+chai.config.includeStack = true;
 chai.should();
 chai.use(chai_fs);
 chai.use(require('chai-json-schema'));
