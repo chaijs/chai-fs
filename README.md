@@ -6,8 +6,6 @@
 
 All assertions are available in `expect`, `should` and `assert` style, and support the optional, message parameter.
 
-:warning: API might change before we reach version 0.1.0.
-
 ## Usage
 
 ### server-side
@@ -225,6 +223,7 @@ There are some ideas for future assertions saved [in this document](https://gith
 
 ## History
 
+* 0.1.0 - Added content.match feature (thanks @legendary-mich)
 * 0.0.2 - Plugin release
 * 0.0.1 - Alpha release
 
@@ -269,14 +268,6 @@ The report field is used the verify the error message if the test fails. It supp
 This looks a bit complex and cumbersome but it does allow to quickly add large amount of detailed tests for all assertions. So far it seems to work empowering so I might extract this to a separate npm module later.
 
 Note it will generate a large amount of case variations so a small error in the code or your test setup can explode the suite wit a many failing assertions. Look closely at which tests are failing to see what is causing what.
-
-## Vagrant
-
-There is a Vagrantfile and set of Chef cookbooks to use with [Vagrant](http://www.vagrantup.com) for easy testing on a Linux VM. It will install a node.js from package, install the dependencies and enable grunt.
-
-Using this is especially important for platform specific features, like working with file permissions. I'm still looking for a way to get this testable on Windows and MacOS.
-
-If you don't already have Vagrant see the [documentation](http://docs.vagrantup.com/v2/getting-started/index.html).
 
 ## License
 
