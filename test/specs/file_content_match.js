@@ -4,38 +4,44 @@ describe(require('path').basename(__filename), function () {
 	var expect = chai.expect;
 	var assert = chai.assert;
 
+  it('should leave an original match() method unaffected', function(){
+    expect('abababa').to.match(/^abababa$/);
+    expect('abababa').to.not.match(/cabadaba/);
+  });
+
 	var styles = {
 		"expect/should": {
 			base: {
 				"basic": function (params) {
-					expect(params.value).to.have.content(params.expected);
-					params.value.should.have.content(params.expected);
+					expect(params.value).to.have.content.that.match(params.expected);
+					params.value.should.have.content.that.match(params.expected);
 				},
 				"with message": {msg: true, call: function (params) {
-					expect(params.value).to.have.content(params.expected, params.msg);
-					params.value.should.have.content(params.expected, params.msg);
+					expect(params.value).to.have.content.that.match(params.expected, params.msg);
+					params.value.should.have.content.that.match(params.expected, params.msg);
 				}}
 			},
 			negate: function (params) {
-				expect(params.value).to.not.have.content(params.expected);
-				params.value.should.not.have.content(params.expected);
+				expect(params.value).to.not.have.content.that.match(params.expected);
+				params.value.should.not.have.content.that.match(params.expected);
+
 			}
 		},
 		assert: {
 			base: {
 				"basic": function (params) {
-					assert.fileContent(params.value, params.expected);
+					assert.fileContentMatch(params.value, params.expected);
 				},
 				"with message": {msg: true, call: function (params) {
-					assert.fileContent(params.value, params.expected, params.msg);
+					assert.fileContentMatch(params.value, params.expected, params.msg);
 				}}
 			},
 			negate: {
 				"basic": function (params) {
-					assert.notFileContent(params.value, params.expected);
+					assert.notFileContentMatch(params.value, params.expected);
 				},
 				"with message": {msg: true, call: function (params) {
-					assert.notFileContent(params.value, params.expected, params.msg);
+					assert.notFileContentMatch(params.value, params.expected, params.msg);
 				}}
 			}
 		}
@@ -46,17 +52,17 @@ describe(require('path').basename(__filename), function () {
 		msg: 'My Message',
 		value: 'test/fixtures/alpha.txt',
 		actual: fs.readFileSync('test/fixtures/alpha.txt', 'utf8'),
-		expected: fs.readFileSync('test/fixtures/alpha.txt', 'utf8')
+		expected: /pha F/ 
 	};
 
 	var test = chai.getStyleTest(styles, defaults);
 
 	test.valid({
-		report: "expected '<%= value %>' not to have content '<%= expected %>'"
+		report: "expected '<%= value %>' not to have content matching <%= expected %>"
 	});
 	test.invalid({
-		expected: 'Other content',
-		report: "expected '<%= value %>' to have content '<%= expected %>' but got '<%= actual %>'"
+		expected: /^baracuda/,
+		report: "expected '<%= value %>' to have content matching <%= expected %> but got '<%= actual %>'"
 	});
 
 	test.error({
@@ -72,7 +78,7 @@ describe(require('path').basename(__filename), function () {
 	test.error({
 		label: 'bad expected type',
 		expected: 123,
-		report: "expected-value: expected <%= expected %> to be a string"
+		report: "expected-value: expected <%= expected %> to be an instance of RegExp"
 	});
 	test.error({
 		label: 'bad value type',
