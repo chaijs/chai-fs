@@ -52,6 +52,10 @@ describe(require('path').basename(__filename), function () {
 		value: 'test/fixtures/symlink.txt',
 		report: "expected '<%= value %>' not to be a symlink"
 	});
+	test.valid({
+		value: 'test/fixtures/broken-symlink.txt',
+		report: "expected '<%= value %>' not to be a symlink"
+	});
 	test.invalid({
 		label: 'regular file',
 		value: 'test/fixtures/alpha.txt',
