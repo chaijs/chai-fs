@@ -16,8 +16,10 @@ Install from npm:
 
 Have chai use the chai-fs module:
 
-    var chai = require('chai');
-    chai.use(require('chai-fs'));
+```js
+var chai = require('chai');
+chai.use(require('chai-fs'));
+```
 
 ### browser-side
 
@@ -29,43 +31,46 @@ No file system.
 
 Assert the return value of `path.basename(path)`
 
-	expect(path).to.have.basename(name, ?msg);
-	expect(path).to.not.have.basename(name, ?msg);
-	
-	path.should.have.basename(name, ?msg);
-	path.should.not.have.basename(name, ?msg);
-	
-	assert.basename(path, name, ?msg);
-	assert.notBasename(path, name, ?msg);
+```js
+expect(path).to.have.basename(name, ?msg);
+expect(path).to.not.have.basename(name, ?msg);
 
+path.should.have.basename(name, ?msg);
+path.should.not.have.basename(name, ?msg);
+
+assert.basename(path, name, ?msg);
+assert.notBasename(path, name, ?msg);
+```
 
 ### dirname()
 
 Assert the return value of `path.dirname(path)`
 
-	expect(path).to.have.dirname(name, ?msg);
-	expect(path).to.not.have.dirname(name, ?msg);
-	
-	path.should.have.dirname(name, ?msg);
-	path.should.not.have.dirname(name, ?msg);
-	
-	assert.dirname(path, name, ?msg);
-	assert.notDirname(path, name, ?msg);
+```js
+expect(path).to.have.dirname(name, ?msg);
+expect(path).to.not.have.dirname(name, ?msg);
 
+path.should.have.dirname(name, ?msg);
+path.should.not.have.dirname(name, ?msg);
+
+assert.dirname(path, name, ?msg);
+assert.notDirname(path, name, ?msg);
+```
 
 ### extname()
 
 Assert the return value of `path.extname(path)`
 
-	expect(path).to.have.extname(name, ?msg);
-	expect(path).to.not.have.extname(name, ?msg);
-	
-	path.should.have.extname(name, ?msg);
-	path.should.not.have.extname(name, ?msg);
-	
-	assert.extname(path, name, ?msg);
-	assert.notExtname(path, name, ?msg);
+```js
+expect(path).to.have.extname(name, ?msg);
+expect(path).to.not.have.extname(name, ?msg);
 
+path.should.have.extname(name, ?msg);
+path.should.not.have.extname(name, ?msg);
+
+assert.extname(path, name, ?msg);
+assert.notExtname(path, name, ?msg);
+```
 
 ### path()
 
@@ -73,14 +78,16 @@ Assert the path exists.
 
 Uses `fs.existsSync()`.
 
-	expect(path).to.be.a.path(?msg);
-	expect(path).to.not.be.a.path(?msg);
-	
-	path.should.be.a.path(?msg);
-	path.should.not.be.a.path(?msg);
-	
-	assert.pathExists(path, ?msg);
-	assert.notPathExists(path, ?msg);
+```js
+expect(path).to.be.a.path(?msg);
+expect(path).to.not.be.a.path(?msg);
+
+path.should.be.a.path(?msg);
+path.should.not.be.a.path(?msg);
+
+assert.pathExists(path, ?msg);
+assert.notPathExists(path, ?msg);
+```
 
 
 Use of Chai's `exist`-chain would've been nice *but* has issues with negations and the message parameter. So don't do that.
@@ -88,30 +95,34 @@ Use of Chai's `exist`-chain would've been nice *but* has issues with negations a
 ### directory()
 
 Assert the path exists and is a directory.
-	
+
 Uses `fs.statSync().isDirectory()`
 
-	expect(path).to.be.a.directory(?msg);
-	expect(path).to.not.be.a.directory(?msg);
-	
-	path.should.be.a.directory(?msg);
-	path.should.not.be.a.directory(?msg);
-	
-	assert.isDirectory(path,  ?msg);
-	assert.notIsDirectory(path, ?msg);
+```js
+expect(path).to.be.a.directory(?msg);
+expect(path).to.not.be.a.directory(?msg);
+
+path.should.be.a.directory(?msg);
+path.should.not.be.a.directory(?msg);
+
+assert.isDirectory(path,  ?msg);
+assert.notIsDirectory(path, ?msg);
+```
 
 ### directory().and.empty
 
-Assert the path exists, is a directory and contains zero item. 
+Assert the path exists, is a directory and contains zero item.
 
-	expect(path).to.be.a.directory(?msg).and.empty;
-	expect(path).to.be.a.directory(?msg).and.not.empty;
-	
-	path.should.be.a.directory(?msg).and.empty;
-	path.should.be.a.directory(?msg).and.not.empty;
-	
-	assert.isEmptyDirectory(path, ?msg);
-	assert.notIsEmptyDirectory(path, ?msg);
+```js
+expect(path).to.be.a.directory(?msg).and.empty;
+expect(path).to.be.a.directory(?msg).and.not.empty;
+
+path.should.be.a.directory(?msg).and.empty;
+path.should.be.a.directory(?msg).and.not.empty;
+
+assert.isEmptyDirectory(path, ?msg);
+assert.notIsEmptyDirectory(path, ?msg);
+```
 
 * Chains after `directory()`
 * Uses `fs.readdirSync().length === 0`.
@@ -123,27 +134,31 @@ Assert the path exists and is a file.
 
 Uses `fs.statSync().isFile()`
 
-	expect(path).to.be.a.file(?msg);
-	expect(path).to.not.be.a.file(?msg);
-	
-	path.should.be.a.file(?msg);
-	path.should.not.be.a.file(?msg);
-	
-	assert.isFile(path, ?msg);
-	assert.notIsFile(path, ?msg);
+```js
+expect(path).to.be.a.file(?msg);
+expect(path).to.not.be.a.file(?msg);
+
+path.should.be.a.file(?msg);
+path.should.not.be.a.file(?msg);
+
+assert.isFile(path, ?msg);
+assert.notIsFile(path, ?msg);
+```
 
 ### file().and.empty
 
-Assert the path exists, is a file and has zero size. 
+Assert the path exists, is a file and has zero size.
 
-	expect(path).to.be.a.file(?msg).and.empty;
-	expect(path).to.be.a.file(?msg).and.not.empty;
-	
-	path.should.be.a.file(?msg).and.empty;
-	path.should.be.a.file(?msg).and.not.empty;
-	
-	assert.isEmptyFile(path, ?msg);
-	assert.notIsEmptyFile(path, ?msg); 
+```js
+expect(path).to.be.a.file(?msg).and.empty;
+expect(path).to.be.a.file(?msg).and.not.empty;
+
+path.should.be.a.file(?msg).and.empty;
+path.should.be.a.file(?msg).and.not.empty;
+
+assert.isEmptyFile(path, ?msg);
+assert.notIsEmptyFile(path, ?msg);
+```
 
 * Chains after `file()`
 * Uses `fs.statSync().size === 0`.
@@ -151,16 +166,18 @@ Assert the path exists, is a file and has zero size.
 
 ### file().with.json
 
-Assert the path exists, is a file and contains json parsable text. 
+Assert the path exists, is a file and contains json parsable text.
 
-	expect(path).to.be.a.file(?msg).with.json;
-	expect(path).to.be.a.file(?msg).with.not.json;
-	
-	path.should.be.a.file(?msg).with.json;
-	path.should.be.a.file(?msg).with.not.json;
-	
-	assert.jsonFile(path, ?msg);
-	assert.notJsonFile(path, ?msg); 
+```js
+expect(path).to.be.a.file(?msg).with.json;
+expect(path).to.be.a.file(?msg).with.not.json;
+
+path.should.be.a.file(?msg).with.json;
+path.should.be.a.file(?msg).with.not.json;
+
+assert.jsonFile(path, ?msg);
+assert.notJsonFile(path, ?msg);
+```
 
 * Chains after `file()`
 * To negate this using `expect/should` you chain the `.not`-negation ***after*** the regular `file()`.
@@ -170,17 +187,19 @@ Assert the path exists, is a file and contains json parsable text.
 
 Assert the path exists, is a file, contains json parsable text conforming to given JSON-Schema.
 
-	expect(path).to.be.a.file(?msg).with.json.using.schema(obj);
-	expect(path).to.be.a.file(?msg).with.json.not.using.schema(obj);
-	
-	path.should.be.a.file(?msg).with.json.using.schema(obj);
-	path.should.be.a.file(?msg).with.json.not.using.schema(obj);
-	
-	assert.jsonSchemaFile(path, schema,?msg);
-	assert.notJsonSchemaFile(path, schema, ?msg); 
+```js
+expect(path).to.be.a.file(?msg).with.json.using.schema(obj);
+expect(path).to.be.a.file(?msg).with.json.not.using.schema(obj);
+
+path.should.be.a.file(?msg).with.json.using.schema(obj);
+path.should.be.a.file(?msg).with.json.not.using.schema(obj);
+
+assert.jsonSchemaFile(path, schema,?msg);
+assert.notJsonSchemaFile(path, schema, ?msg);
+```
 
 * Chains after `file().with.json`
-* The schema parameter must be a valid JSON-Schema v4. 
+* The schema parameter must be a valid JSON-Schema v4.
 * Depends on the [chai-json-schema](https://github.com/Bartvds/chai-json-schema) plugin to be separately activated with `chai.use()`.
 * To negate this using `expect/should` you chain the `.not`-negation ***after*** the regular `json`.
 * The `with` and `using` chains are just syntax sugar.
@@ -189,31 +208,35 @@ Assert the path exists, is a file, contains json parsable text conforming to giv
 
 Assert the path exists, is a file and has specific content.
 
-	expect(path).to.have.content(data, ?msg);
-	expect(path).to.not.have.content(data, ?msg);
-	
-	path.should.have.content(data, ?msg);
-	path.should.not.have.content(data, ?msg);
-	
-	assert.fileContent(path, data, ?msg);
-	assert.notFileContent(path, data, ?msg);
+```js
+expect(path).to.have.content(data, ?msg);
+expect(path).to.not.have.content(data, ?msg);
 
-* Reads file as utf8 text (could update to support base64, binary Buffer etc). 
+path.should.have.content(data, ?msg);
+path.should.not.have.content(data, ?msg);
 
-Note: *In a future version this might be supported as a chain behind file() and directory()* 
+assert.fileContent(path, data, ?msg);
+assert.notFileContent(path, data, ?msg);
+```
+
+* Reads file as utf8 text (could update to support base64, binary Buffer etc).
+
+Note: *In a future version this might be supported as a chain behind file() and directory()*
 
 ### content.that.match(/xyz/)
 
-Assert the path exists, is a file and has content that match the regular expression. 
+Assert the path exists, is a file and has content that match the regular expression.
 
-	expect(path).to.have.content.that.match(/xyz/, ?msg);
-	expect(path).to.not.have.content.that.match(/xyz/, ?msg);
-	
-	path.should.have.content.that.match(/xyz/, ?msg);
-	path.should.not.have.content.that.match(/xyz/, ?msg);
-	
-	assert.fileContentMatch(path, /xyz/, ?msg);
-	assert.notFileContentMatch(path, /xyz/, ?msg);
+```js
+expect(path).to.have.content.that.match(/xyz/, ?msg);
+expect(path).to.not.have.content.that.match(/xyz/, ?msg);
+
+path.should.have.content.that.match(/xyz/, ?msg);
+path.should.not.have.content.that.match(/xyz/, ?msg);
+
+assert.fileContentMatch(path, /xyz/, ?msg);
+assert.notFileContentMatch(path, /xyz/, ?msg);
+```
 
 * Reads file as utf8 text.
 
@@ -249,17 +272,17 @@ See the `Gruntfile` for additional commands.
 
 ### :wrench: Test generator
 
-This plugin uses a prototype of an "assertion plugin test generator" to generates tests for all aspects of the assertions while keeping the specs DRY. 
+This plugin uses a prototype of an "assertion plugin test generator" to generates tests for all aspects of the assertions while keeping the specs DRY.
 
 The pattern splits the test into a style declaration tree and a set of variation on 3 types of test scenarios. The generator then combines ('multiplies') every scenario variation with the style tree data to get good coverage of all cases.
 
 The style tree defines ways to use an assertion: first level is the style: expect/should and assert. Then it defines both the normal use and the negation, then divides those into different invocations patterns for each style. So you can test with/without message, or as a chained method or property etc.
 
-The tests are ways to specify assertions and the test expectations. 
+The tests are ways to specify assertions and the test expectations.
 
 * `valid`  - test expected to pass (but fail the negation)
-* `invalid` - test expected to fail (but pass the negation). 
-* `error` - test expected to always fail (even when negated), because the data is invalid (eg: bad data type, missing parameters etc). 
+* `invalid` - test expected to fail (but pass the negation).
+* `error` - test expected to always fail (even when negated), because the data is invalid (eg: bad data type, missing parameters etc).
 
 The report field is used the verify the error message if the test fails. It supports a simple template format using the assertion data object.
 
