@@ -1,6 +1,6 @@
 # chai-fs
 
-[![Build Status](https://secure.travis-ci.org/Bartvds/chai-fs.png?branch=master)](http://travis-ci.org/Bartvds/chai-fs) [![Dependency Status](https://david-dm.org/Bartvds/chai-fs.svg)](https://david-dm.org/Bartvds/chai-fs) [![devDependency Status](https://david-dm.org/Bartvds/chai-fs/dev-status.svg)](https://david-dm.org/Bartvds/chai-fs#info=devDependencies) [![NPM version](https://badge.fury.io/js/chai-fs.png)](http://badge.fury.io/js/chai-fs)
+[![Build Status](http://img.shields.io/travis/Bartvds/chai-fs/master.svg?style=flat)](http://travis-ci.org/Bartvds/chai-fs) [![Dependency Status](https://david-dm.org/Bartvds/chai-fs.svg)](https://david-dm.org/Bartvds/chai-fs) [![devDependency Status](https://david-dm.org/Bartvds/chai-fs/dev-status.svg)](https://david-dm.org/Bartvds/chai-fs#info=devDependencies) [![NPM version](http://img.shields.io/npm/v/chai-fs.svg?style=flat)](http://badge.fury.io/js/chai-fs)
 
 [Chai](http://chaijs.com/) assertion [plugin](http://chaijs.com/plugins/chai-fs) for the Node.js filesystem API. Uses `path` and synchronous `fs` to assert files and directories.
 
