@@ -21,6 +21,9 @@
   },
   "keywords": [
     "chai",
+    "chai-plugin",
+    "vendor",
+    "fs",
     "test",
     "assertion",
     "assert",
