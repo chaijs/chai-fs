@@ -5,10 +5,6 @@ Some ideas for new assertions. I' might add these in batches when I got a use ca
 :warning: *This is not final in any way!*
 
 ````
-// content by path
-expect(path).to.be.a.file(msg).and.equal(otherPath);
-expect(path).to.be.a.file(msg).and.deep.equal(otherPath); // + mtime, uid, gid
-
 // content types
 expect(path).to.be.a.file(msg).with.xml;
 
