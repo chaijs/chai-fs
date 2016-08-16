@@ -83,7 +83,7 @@ module.exports = function (chai, _) {
 			throw( new Error('no report param'));
 		}
 
-		var report = _.template(params.report, params);
+		var report = _.template(params.report)(params);
 
 		_.each(styles, function (style, styleName) {
 			if (!style.hasOwnProperty(type)) {
