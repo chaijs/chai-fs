@@ -1,6 +1,6 @@
 # chai-fs
 
-[![Build Status](https://secure.travis-ci.org/Bartvds/chai-fs.png?branch=master)](http://travis-ci.org/Bartvds/chai-fs) [![Dependency Status](https://david-dm.org/Bartvds/chai-fs.svg)](https://david-dm.org/Bartvds/chai-fs) [![devDependency Status](https://david-dm.org/Bartvds/chai-fs/dev-status.svg)](https://david-dm.org/Bartvds/chai-fs#info=devDependencies) [![NPM version](https://badge.fury.io/js/chai-fs.png)](http://badge.fury.io/js/chai-fs)
+[![Build Status](https://secure.travis-ci.org/chaijs/chai-fs.png?branch=master)](http://travis-ci.org/chaijs/chai-fs) [![Dependency Status](https://david-dm.org/chaijs/chai-fs.svg)](https://david-dm.org/chaijs/chai-fs) [![devDependency Status](https://david-dm.org/chaijs/chai-fs/dev-status.svg)](https://david-dm.org/chaijs/chai-fs#info=devDependencies) [![NPM version](https://badge.fury.io/js/chai-fs.png)](http://badge.fury.io/js/chai-fs)
 
 [Chai](http://chaijs.com/) assertion [plugin](http://chaijs.com/plugins/chai-fs) for the Node.js filesystem API. Uses `path` and synchronous `fs` to assert files and directories.
 
@@ -222,7 +222,7 @@ Assert the path exists, is a file, contains json parsable text conforming to giv
 
 * Chains after `file().with.json`
 * The schema parameter must be a valid JSON-Schema v4.
-* Depends on the [chai-json-schema](https://github.com/Bartvds/chai-json-schema) plugin to be separately activated with `chai.use()`.
+* Depends on the [chai-json-schema](https://github.com/chaijs/chai-json-schema) plugin to be separately activated with `chai.use()`.
 * To negate this using `expect/should` you chain the `.not`-negation ***after*** the regular `json`.
 * The `with` and `using` chains are just syntax sugar.
 
@@ -260,7 +260,7 @@ Assert the path exists, is a file and has contents that match the regular expres
 
 ###  Planned assertions
 
-There are some ideas for future assertions saved [in this document](https://github.com/Bartvds/chai-fs/tree/master/docs/planned.md).
+There are some ideas for future assertions saved [in this document](https://github.com/chaijs/chai-fs/tree/master/docs/planned.md).
 
 ## History
 
