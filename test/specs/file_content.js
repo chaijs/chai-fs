@@ -9,16 +9,34 @@ describe(require('path').basename(__filename), function () {
 			base: {
 				"basic": function (params) {
 					expect(params.value).to.have.content(params.expected);
+					expect(params.value).to.have.contents(params.expected);
+					expect(params.value).to.be.a.file().with.content(params.expected);
+					expect(params.value).to.be.a.file().with.contents(params.expected);
 					params.value.should.have.content(params.expected);
+					params.value.should.have.contents(params.expected);
+					params.value.should.be.a.file().with.content(params.expected);
+					params.value.should.be.a.file().with.contents(params.expected);
 				},
 				"with message": {msg: true, call: function (params) {
 					expect(params.value).to.have.content(params.expected, params.msg);
+					expect(params.value).to.have.contents(params.expected, params.msg);
+					expect(params.value).to.be.a.file(params.msg).with.content(params.expected, params.msg);
+					expect(params.value).to.be.a.file(params.msg).with.contents(params.expected, params.msg);
 					params.value.should.have.content(params.expected, params.msg);
+					params.value.should.have.contents(params.expected, params.msg);
+					params.value.should.be.a.file(params.msg).with.content(params.expected, params.msg);
+					params.value.should.be.a.file(params.msg).with.contents(params.expected, params.msg);
 				}}
 			},
 			negate: function (params) {
 				expect(params.value).to.not.have.content(params.expected);
+				expect(params.value).to.not.have.contents(params.expected);
+				expect(params.value).to.be.a.file().and.not.have.content(params.expected);
+				expect(params.value).to.be.a.file().and.not.have.contents(params.expected);
 				params.value.should.not.have.content(params.expected);
+				params.value.should.not.have.contents(params.expected);
+				params.value.should.be.a.file().and.not.have.content(params.expected);
+				params.value.should.be.a.file().and.not.have.contents(params.expected);
 			}
 		},
 		assert: {

@@ -14,16 +14,34 @@ describe(require('path').basename(__filename), function () {
 			base: {
 				"basic": function (params) {
 					expect(params.value).to.have.content.that.match(params.expected);
+					expect(params.value).to.have.contents.that.match(params.expected);
+					expect(params.value).to.be.a.file().with.content.that.match(params.expected);
+					expect(params.value).to.be.a.file().with.contents.that.match(params.expected);
 					params.value.should.have.content.that.match(params.expected);
+					params.value.should.have.contents.that.match(params.expected);
+					params.value.should.be.a.file().with.content.that.match(params.expected);
+					params.value.should.be.a.file().with.contents.that.match(params.expected);
 				},
 				"with message": {msg: true, call: function (params) {
 					expect(params.value).to.have.content.that.match(params.expected, params.msg);
+					expect(params.value).to.have.contents.that.match(params.expected, params.msg);
+					expect(params.value).to.be.a.file(params.msg).with.content.that.match(params.expected, params.msg);
+					expect(params.value).to.be.a.file(params.msg).with.contents.that.match(params.expected, params.msg);
 					params.value.should.have.content.that.match(params.expected, params.msg);
+					params.value.should.have.contents.that.match(params.expected, params.msg);
+					params.value.should.be.a.file(params.msg).with.content.that.match(params.expected, params.msg);
+					params.value.should.be.a.file(params.msg).with.contents.that.match(params.expected, params.msg);
 				}}
 			},
 			negate: function (params) {
 				expect(params.value).to.not.have.content.that.match(params.expected);
+				expect(params.value).to.not.have.contents.that.match(params.expected);
+				expect(params.value).to.be.a.file().and.not.have.content.that.match(params.expected);
+				expect(params.value).to.be.a.file().and.not.have.contents.that.match(params.expected);
 				params.value.should.not.have.content.that.match(params.expected);
+				params.value.should.not.have.contents.that.match(params.expected);
+				params.value.should.be.a.file().and.not.have.content.that.match(params.expected);
+				params.value.should.be.a.file().and.not.have.contents.that.match(params.expected);
 
 			}
 		},
@@ -52,7 +70,7 @@ describe(require('path').basename(__filename), function () {
 		msg: 'My Message',
 		value: 'test/fixtures/alpha.txt',
 		actual: fs.readFileSync('test/fixtures/alpha.txt', 'utf8'),
-		expected: /pha F/ 
+		expected: /pha F/
 	};
 
 	var test = chai.getStyleTest(styles, defaults);

@@ -149,6 +149,40 @@ Assert the path exists, is a file and has zero size.
 * Uses `fs.statSync().size === 0`.
 * To negate this using `expect/should` you chain the `.not`-negation ***after*** the regular `file()`.
 
+### file().with.content(str)
+
+Assert the path exists, is a file and has specific content.
+
+	expect(path).to.be.a.file(?msg).with.content(data, ?msg);
+	expect(path).to.be.a.file(?msg).and.not.have.content(data, ?msg);
+
+	path.should.be.a.file(?msg).with.content(data, ?msg);
+	path.should.be.a.file(?msg).and.not.have.content(data, ?msg);
+
+	assert.fileContent(path, data, ?msg);
+	assert.notFileContent(path, data, ?msg);
+
+* Reads file as utf8 text (could update to support base64, binary Buffer etc).
+* You can use `.content()` or `.contents()`. They're both the same.
+* To negate this using `expect/should` you chain the `.not`-negation ***after*** the regular `file()`.
+
+### file().with.contents.that.match(/xyz/)
+
+Assert the path exists, is a file and has contents that match the regular expression.
+
+	expect(path).to.be.a.file(?msg).with.contents.that.match(/xyz/, ?msg);
+	expect(path).to.be.a.file(?msg).and.not.have.contents.that.match(/xyz/, ?msg);
+
+	path.should.be.a.file(?msg).with.contents.that.match(/xyz/, ?msg);
+	path.should.be.a.file(?msg).and.not.have.contents.that.match(/xyz/, ?msg);
+
+	assert.fileContentMatch(path, /xyz/, ?msg);
+	assert.notFileContentMatch(path, /xyz/, ?msg);
+
+* Reads file as utf8 text (could update to support base64, binary Buffer etc).
+* You can use `.content` or `.contents`. They're both the same.
+* To negate this using `expect/should` you chain the `.not`-negation ***after*** the regular `file()`.
+
 ### file().and.equal(otherPath)
 
 Assert that _both_ paths exist, are files and contain the same content
@@ -176,7 +210,7 @@ Assert that _both_ paths exist, are files, contain the same content, and have th
  * last-changed time (`stats.ctime`)
  * last-access time (`stats.atime`)
 
-```
+
 	expect(path).to.be.a.file(?msg).and.deep.equal(otherPath, ?msg);
 	expect(path).to.be.a.file(?msg).and.not.deep.equal(otherPath, ?msg);
 
@@ -185,7 +219,6 @@ Assert that _both_ paths exist, are files, contain the same content, and have th
 
 	assert.fileDeepEqual(path, otherPath, ?msg);
 	assert.notFileDeepEqual(path, otherPath, ?msg);
-```
 
 * Reads both files as utf8 text (could update to support base64, binary Buffer etc).
 * To negate this using `expect/should` you chain the `.not`-negation ***after*** the regular `file()`.
@@ -225,38 +258,6 @@ Assert the path exists, is a file, contains json parsable text conforming to giv
 * Depends on the [chai-json-schema](https://github.com/chaijs/chai-json-schema) plugin to be separately activated with `chai.use()`.
 * To negate this using `expect/should` you chain the `.not`-negation ***after*** the regular `json`.
 * The `with` and `using` chains are just syntax sugar.
-
-### content()
-
-Assert the path exists, is a file and has specific content.
-
-	expect(path).to.have.content(data, ?msg);
-	expect(path).to.not.have.content(data, ?msg);
-
-	path.should.have.content(data, ?msg);
-	path.should.not.have.content(data, ?msg);
-
-	assert.fileContent(path, data, ?msg);
-	assert.notFileContent(path, data, ?msg);
-
-* Reads file as utf8 text (could update to support base64, binary Buffer etc).
-
-Note: *In a future version this might be supported as a chain behind file() and directory()*
-
-### content.that.match(/xyz/)
-
-Assert the path exists, is a file and has contents that match the regular expression.
-
-	expect(path).to.have.content.that.match(/xyz/, ?msg);
-	expect(path).to.not.have.content.that.match(/xyz/, ?msg);
-
-	path.should.have.content.that.match(/xyz/, ?msg);
-	path.should.not.have.content.that.match(/xyz/, ?msg);
-
-	assert.fileContentMatch(path, /xyz/, ?msg);
-	assert.notFileContentMatch(path, /xyz/, ?msg);
-
-* Reads file as utf8 text (could update to support base64, binary Buffer etc).
 
 ###  Planned assertions
 
