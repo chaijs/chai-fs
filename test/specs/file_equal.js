@@ -117,56 +117,56 @@ describe(require('path').basename(__filename), function () {
 		label: 'same file',
 		value: 'test/fixtures/alpha.txt',
 		expected: 'test/fixtures/alpha.txt',
-		report: "expected '<%= value %>' not to equal <%= expected %>"
+		report: "expected '<%= value %>' not to equal '<%= expected %>'"
 	});
 	test.valid({
 		label: 'same file - deep',
 		deep: true,
 		value: 'test/fixtures/alpha.txt',
 		expected: 'test/fixtures/alpha.txt',
-		report: "expected '<%= value %>' not to deep equal <%= expected %>"
+		report: "expected '<%= value %>' not to deep equal '<%= expected %>'"
 	});
 
 	test.invalid({
 		label: 'different files',
 		value: 'test/fixtures/alpha.txt',
 		expected: 'test/fixtures/tango.txt',
-		report: "expected '<%= value %>' to equal <%= expected %>"
+		report: "expected '<%= value %>' to equal '<%= expected %>'"
 	});
 	test.invalid({
 		label: 'different files - deep',
 		deep: true,
 		value: 'test/fixtures/alpha.txt',
 		expected: 'test/fixtures/tango.txt',
-		report: "expected '<%= value %>' to deep equal <%= expected %>"
+		report: "expected '<%= value %>' to deep equal '<%= expected %>'"
 	});
 
 	test.valid({
 		label: 'different files, same contents',
 		value: 'test/fixtures/alpha.txt',
 		expected: 'test/fixtures/alpha-copy.txt',
-		report: "expected '<%= value %>' not to equal <%= expected %>"
+		report: "expected '<%= value %>' not to equal '<%= expected %>'"
 	});
 	test.invalid({
 		label: 'different files, same contents - deep',
 		deep: true,
 		value: 'test/fixtures/alpha.txt',
 		expected: 'test/fixtures/alpha-copy.txt',
-		report: "expected '<%= value %>' to deep equal <%= expected %> (last-modified times are different)"
+		report: "expected '<%= value %>' to deep equal '<%= expected %>' (last-modified times are different)"
 	});
 
 	test.valid({
 		label: 'empty file',
 		value: 'test/fixtures/empty.txt',
 		expected: 'test/fixtures/empty.txt',
-		report: "expected '<%= value %>' not to equal <%= expected %>"
+		report: "expected '<%= value %>' not to equal '<%= expected %>'"
 	});
 	test.valid({
 		label: 'empty file - deep',
 		deep: true,
 		value: 'test/fixtures/empty.txt',
 		expected: 'test/fixtures/empty.txt',
-		report: "expected '<%= value %>' not to deep equal <%= expected %>"
+		report: "expected '<%= value %>' not to deep equal '<%= expected %>'"
 	});
 
 	test.error({
