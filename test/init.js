@@ -1,5 +1,6 @@
 var mkdirp = require('mkdirp');
 var touch = require('touch');
+var del = require('del');
 var _ = require('underscore');
 
 var chai_fs = require('../lib/index');
@@ -18,15 +19,23 @@ require('./tester')(chai, _);
 
 before(function () {
 	// create some empty dirs (cannot check-in empty dirs to git)
-	mkdirp.sync('./test/fixtures/empty');
 	mkdirp.sync('./test/tmp');
+	mkdirp.sync('./test/fixtures/empty');
+	mkdirp.sync('./test/fixtures/dir/.dotdir/empty');
+	mkdirp.sync('./test/fixtures/dir-copy/.dotdir/empty');
 
+	assert.isDirectory('./test/tmp');
 	assert.isDirectory('./test/fixtures');
 	assert.isDirectory('./test/fixtures/empty');
-	assert.isDirectory('./test/tmp');
+	assert.isDirectory('./test/fixtures/dir/.dotdir/empty');
+	assert.isDirectory('./test/fixtures/dir-copy/.dotdir/empty');
 
-	// Change the times of alpha-copy.txt, so it will be equal, but not DEEP equal to alpha.txt
+	// change the times of alpha-copy.txt, so it will be equal, but not DEEP equal to alpha.txt
 	touch.sync('./test/fixtures/alpha-copy.txt', {time: '2016-01-01T00:00:00Z'});
+
+  // delete files that get created automatically by the OS (they mess-up directory listings)
+  del.sync('test/fixtures/**/.DS_Store', {dot: true});
+  del.sync('test/fixtures/**/Thumbs.db', {dot: true});
 });
 
 describe('chai-fs', function () {

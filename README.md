@@ -102,7 +102,7 @@ Uses `fs.statSync().isDirectory()`
 
 ### directory().and.empty
 
-Assert the path exists, is a directory and contains zero item.
+Assert the path exists, is a directory and contains zero items.
 
 	expect(path).to.be.a.directory(?msg).and.empty;
 	expect(path).to.be.a.directory(?msg).and.not.empty;
@@ -115,6 +115,140 @@ Assert the path exists, is a directory and contains zero item.
 
 * Chains after `directory()`
 * Uses `fs.readdirSync().length === 0`.
+* To negate this using `expect/should` you chain the `.not`-negation ***after*** the regular `directory()`.
+
+### directory().with.contents([...])
+
+Assert the path exists, is a directory and has specific contents (files, sub-directories, symlinks, etc).
+
+	expect(path).to.be.a.directory(?msg).with.contents(array, ?msg);
+	expect(path).to.be.a.directory(?msg).and.not.have.contents(array, ?msg);
+	expect(path).to.be.a.directory(?msg).with.deep.contents(array, ?msg);
+	expect(path).to.be.a.directory(?msg).and.not.have.deep.contents(array, ?msg);
+	expect(path).to.be.a.directory(?msg).and.include.contents(array, ?msg);
+	expect(path).to.be.a.directory(?msg).and.not.include.contents(array, ?msg);
+
+	path.should.be.a.directory(?msg).with.contents(array, ?msg);
+	path.should.be.a.directory(?msg).and.not.have.contents(array, ?msg);
+	path.should.be.a.directory(?msg).with.deep.contents(array, ?msg);
+	path.should.be.a.directory(?msg).and.not.have.deep.contents(array, ?msg);
+	path.should.be.a.directory(?msg).and.include.contents(array, ?msg);
+	path.should.be.a.directory(?msg).and.not.include.contents(array, ?msg);
+
+	assert.directoryContent(path, array, ?msg);
+	assert.notDirectoryContent(path, array, ?msg);
+	assert.directoryDeepContent(path, array, ?msg);
+	assert.notDirectoryDeepContent(path, array, ?msg);
+	assert.directoryInclude(path, array, ?msg);
+	assert.notDirectoryInclude(path, array, ?msg);
+
+* The paths of contents are relative to the directory
+* Only the top level contents are included, unless `.deep` is in the chain
+* If `.include` or `.contain` is in the chain, then the directory must contain _at least_ the specified contents, but may contain more
+* You can use `.content()` or `.contents()`. They're both the same.
+* To negate this using `expect/should` you chain the `.not`-negation ***after*** the regular `directory()`.
+
+### directory().with.files([...])
+
+Assert the path exists, is a directory and contains specific files.
+
+	expect(path).to.be.a.directory(?msg).with.files(array, ?msg);
+	expect(path).to.be.a.directory(?msg).and.not.have.files(array, ?msg);
+	expect(path).to.be.a.directory(?msg).with.deep.files(array, ?msg);
+	expect(path).to.be.a.directory(?msg).and.not.have.deep.files(array, ?msg);
+	expect(path).to.be.a.directory(?msg).and.include.files(array, ?msg);
+	expect(path).to.be.a.directory(?msg).and.not.include.files(array, ?msg);
+
+	path.should.be.a.directory(?msg).with.files(array, ?msg);
+	path.should.be.a.directory(?msg).and.not.have.files(array, ?msg);
+	path.should.be.a.directory(?msg).with.deep.files(array, ?msg);
+	path.should.be.a.directory(?msg).and.not.have.deep.files(array, ?msg);
+	path.should.be.a.directory(?msg).and.include.files(array, ?msg);
+	path.should.be.a.directory(?msg).and.not.include.files(array, ?msg);
+
+	assert.directoryFiles(path, array, ?msg);
+	assert.notDirectoryFiles(path, array, ?msg);
+	assert.directoryDeepFiles(path, array, ?msg);
+	assert.notDirectoryDeepFiles(path, array, ?msg);
+	assert.directoryIncludeFiles(path, array, ?msg);
+	assert.notDirectoryIncludeFiles(path, array, ?msg);
+
+* The file paths are relative to the directory
+* Only the top level files are included, unless `.deep` is in the chain
+* If `.include` or `.contain` is in the chain, then the directory must contain _at least_ the specified files, but may contain more
+* To negate this using `expect/should` you chain the `.not`-negation ***after*** the regular `directory()`.
+
+### directory().with.subDirs([...])
+
+Assert the path exists, is a directory and contains specific sub-directories.
+
+	expect(path).to.be.a.directory(?msg).with.subDirs(array, ?msg);
+	expect(path).to.be.a.directory(?msg).and.not.have.subDirs(array, ?msg);
+	expect(path).to.be.a.directory(?msg).with.deep.subDirs(array, ?msg);
+	expect(path).to.be.a.directory(?msg).and.not.have.deep.subDirs(array, ?msg);
+	expect(path).to.be.a.directory(?msg).and.include.subDirs(array, ?msg);
+	expect(path).to.be.a.directory(?msg).and.not.include.subDirs(array, ?msg);
+
+	path.should.be.a.directory(?msg).with.subDirs(array, ?msg);
+	path.should.be.a.directory(?msg).and.not.have.subDirs(array, ?msg);
+	path.should.be.a.directory(?msg).with.deep.subDirs(array, ?msg);
+	path.should.be.a.directory(?msg).and.not.have.deep.subDirs(array, ?msg);
+	path.should.be.a.directory(?msg).and.include.subDirs(array, ?msg);
+	path.should.be.a.directory(?msg).and.not.include.subDirs(array, ?msg);
+
+	assert.directorySubDirs(path, array, ?msg);
+	assert.notDirectorySubDirs(path, array, ?msg);
+	assert.directoryDeepSubDirs(path, array, ?msg);
+	assert.notDirectoryDeepSubDirs(path, array, ?msg);
+	assert.directoryIncludeSubDirs(path, array, ?msg);
+	assert.notDirectoryIncludeSubDirs(path, array, ?msg);
+
+* The paths of contents are relative to the starting directory
+* Only the top level sub-directories are included, unless `.deep` is in the chain
+* If `.include` or `.contain` is in the chain, then the directory must contain _at least_ the specified sub-directories, but may contain more
+* To negate this using `expect/should` you chain the `.not`-negation ***after*** the regular `directory()`.
+
+### directory().with.contents.that.satisfy(fn)
+
+You can chain `.contents`, `.files`, and `.subDirs` with any Chai.js assertion that can operate on an array, including `.lengthOf()`, `.satisfy()`, `.members()`, etc.
+
+	expect(path).to.be.a.directory().and.content.is.an('array');
+
+	expect(path).to.be.a.directory().and.files.have.lengthOf(5);
+
+	path.should.be.a.directory().with.subDirs.that.include.members(['subDir1', 'subDir2']);
+
+	path.should.be.a.directory().with.files.that.satisfy(function(files) {
+	  return files.every(function(file) {
+	    return file.substr(-4) === '.txt';
+	  });
+	})
+
+* The paths of contents are relative to the directory
+* Only the top level contents are included, unless `.deep` is in the chain
+* You can use `.content()` or `.contents()`. They're both the same.
+* To negate this using `expect/should` you chain the `.not`-negation ***after*** the regular `directory()`.
+
+### directory().and.equal(otherPath)
+
+Assert that _both_ paths exist, are directories and contain the same contents (files, sub-directories, symlinks, etc).
+
+	expect(path).to.be.a.directory(?msg).and.equal(otherPath, ?msg);
+	expect(path).to.be.a.directory(?msg).and.not.equal(otherPath, ?msg);
+	expect(path).to.be.a.directory(?msg).and.deep.equal(otherPath, ?msg);
+	expect(path).to.be.a.directory(?msg).and.not.deep.equal(otherPath, ?msg);
+
+	path.should.be.a.directory(?msg).and.equal(otherPath, ?msg);
+	path.should.be.a.directory(?msg).and.not.equal(otherPath, ?msg);
+	path.should.be.a.directory(?msg).and.deep.equal(otherPath, ?msg);
+	path.should.be.a.directory(?msg).and.not.deep.equal(otherPath, ?msg);
+
+	assert.directoryEqual(path, otherPath, ?msg);
+	assert.notDirectoryEqual(path, otherPath, ?msg);
+	assert.directoryDeepEqual(path, otherPath, ?msg);
+	assert.notDirectoryDeepEqual(path, otherPath, ?msg);
+
+* Only the top level contents are compared, unless `.deep` is in the chain
 * To negate this using `expect/should` you chain the `.not`-negation ***after*** the regular `directory()`.
 
 ### file()
