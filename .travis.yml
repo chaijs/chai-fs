@@ -1,4 +1,14 @@
 language: node_js
 node_js:
-  - "0.11"
-  - "0.10"
+- '0.11'
+- '0.10'
+deploy:
+  provider: npm
+  email:
+    secure: Nglv1+TFS5Sj+zQtx+vVxMdBgsUhnKzC4LZ6tViN4Nha6SqOUZQJyiQAg0AK4ZsmoqZ4wbfhgpQXhEORcazifkvAcFlkYQuNckdJHIeCggHsvKeTU37aPTA6G5vLPpfHtnEUqMsBJeqmql1BY8UDTCKcBUCoQCmkPufgaVYZIsc=
+  api_key:
+    secure: Sx85fCOHCQDp75vthbQ2oB8lip/l1QbSLwbWJf/YKV8HN9xZIxr2tB5t/hgjTLHz4fizCCx9tv27djylzRKxz3dgFkj5u4yoRPVjf6eseDqopMQlcj8TsefpCfR23sRFQAK279x8zd7YW7mMwJA20NvRKsDs/1U57RtMQZdrlOM=
+  on:
+    tags: true
+    repo: chaijs/chai-fs
+    all_branches: true
