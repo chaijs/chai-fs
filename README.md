@@ -342,7 +342,6 @@ Assert that _both_ paths exist, are files, contain the same content, and have th
  * creation time (`stats.birthtime`)
  * last-modified time (`stats.mtime`)
  * last-changed time (`stats.ctime`)
- * last-access time (`stats.atime`)
 
 
 	expect(path).to.be.a.file(?msg).and.deep.equal(otherPath, ?msg);
@@ -356,6 +355,7 @@ Assert that _both_ paths exist, are files, contain the same content, and have th
 
 * Reads both files as utf8 text (could update to support base64, binary Buffer etc).
 * To negate this using `expect/should` you chain the `.not`-negation ***after*** the regular `file()`.
+* last-access time (`stats.atime`) is _not_ included in the comparison, since just reading this value (via `fs.stat()`) causes it to change on some operating systems, which could result in unstable tests
 
 ### file().with.json
 
