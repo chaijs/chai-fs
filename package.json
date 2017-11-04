@@ -35,7 +35,7 @@
   "main": "lib/index.js",
   "readmeFilename": "README.md",
   "engines": {
-    "node": ">= 0.10.0"
+    "node": ">=4"
   },
   "scripts": {
     "test": "grunt test"
