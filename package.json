@@ -41,7 +41,7 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "bit-mask": "0.0.2-alpha",
+    "bit-mask": "^1.0.1",
     "readdir-enhanced": "^1.4.0"
   },
   "devDependencies": {
