@@ -56,7 +56,7 @@
     "grunt-mocha-test": "^0.13.2",
     "jshint-path-reporter": "~0.1",
     "mkdirp": "^0.5.0",
-    "mocha": "^4.0.1",
+    "mocha": "^7.0.1",
     "mocha-unfunk-reporter": "^0.4.0",
     "touch": "^3.1.0",
     "underscore": "^1.8.3"
